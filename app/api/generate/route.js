@@ -27,6 +27,8 @@ Aim for a balanced mix of basic and advanced questions.
 Adjust difficulty to match the user's level of expertise in the subject.
 Use varied question formats to engage different aspects of recall (e.g., multiple-choice, fill-in-the-blank, true/false).
 
+Only generate 10 flashcards.
+
 Return in the following JSON format
 {
     "flashcards: [
