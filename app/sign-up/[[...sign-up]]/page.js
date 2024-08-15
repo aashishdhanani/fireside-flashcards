@@ -1,4 +1,4 @@
-import { SignIn } from '@clerk/nextjs'
+import { SignUp } from '@clerk/nextjs'
 import { AppBar, Container, Toolbar, Typography, Box, Button} from '@mui/material'
 import Link from 'next/link'
 
@@ -35,9 +35,9 @@ export default function SignUpPage() {
                 justifyContents="center"
             >
                 <Typography variant="h4">
-                    Sign In
+                    Sign Up
                 </Typography>
-                <SignIn />
+                <SignUp />
             </Box>
         </Container>
     )
