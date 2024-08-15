@@ -1,4 +1,10 @@
-import { Container, Grid } from "@mui/material"
+'use client'
+import { useUser} from  '@clerk/nextjs'
+import {useEffect, useState} from 'react'
+
+import {CollectionReference, doc, getDoc, setDoc} from 'firebase/firestore'
+import {db} from '@/firebase'
+import {useRouter} from 'next/navigation'
 
 export default function Flashcard() {
     const { isLoaded, isSignedIn, user } = useUser()
@@ -6,10 +12,6 @@ export default function Flashcard() {
     const router = useRouter()
 
 
-    // navigates to indivdual card sets
-    const handleCardClick = (id) => {
-        router.push(`/flashcard?id=${id}`)
-      }
 
     // fetch user's flashcards
     useEffect(() => {
@@ -27,6 +29,14 @@ export default function Flashcard() {
         getFlashcards()
     }, [user])
 
+    if (!isLoaded || !isSignedIn){
+        return <></>
+    }
+     // navigates to indivdual card sets
+     const handleCardClick = (id) => {
+        router.push(`/flashcard?id=${id}`)
+      }
+
     // grid of flashcard sets
     return (
         <Container maxWidth="md">
@@ -34,7 +44,7 @@ export default function Flashcard() {
                 {flashcards.map((flashcard, index) => (
                 <Grid item xs={12} sm={6} md={4} key={index}>
                     <Card>
-                    <CardActionArea onClick={() => handleCardClick(flashcard.name)}>
+                    <CardActionArea onClick={() => handleCardClick(id)}>
                         <CardContent>
                         <Typography variant="h5" component="div">
                             {flashcard.name}
