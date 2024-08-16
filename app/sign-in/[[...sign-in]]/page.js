@@ -10,7 +10,7 @@ export default function SignUpPage() {
                     <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
                         <Typography 
                         variant="h6"  
-                        style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                        style={{ flexGrow: 1, textDecoration: 'none', color: '#FCD19C', cursor: 'pointer' }}
                         >
                         Fireside Flashcards
                         </Typography>

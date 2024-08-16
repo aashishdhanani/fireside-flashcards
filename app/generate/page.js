@@ -86,13 +86,13 @@ export default function Generate() {
     }
 
     return (
-        <Container maxWidth="100vw">
-            <AppBar position="static">
+        <Container maxWidth="100vw" sx={{ backgroundColor: '#2E2E2E', minHeight: '100vh', p: 0 }}>
+            <AppBar position="static" sx={{ backgroundColor: '#2E2E2E'}}>
                 <Toolbar>
                 <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
                     <Typography 
                     variant="h6"  
-                    style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                    style={{ flexGrow: 1, textDecoration: 'none', color: '#FCD19C', cursor: 'pointer' }}
                     >
                     Fireside Flashcards
                     </Typography>
@@ -117,7 +117,7 @@ export default function Generate() {
                     alignItems: 'center',
                 }}
             >
-                <Typography variant="h4">
+                <Typography variant="h4" sx={{ mb: 4, color: 'white' }}>
                     Generate Flashcards
                 </Typography>
                 <Paper sx={{ p: 4, width: '100%' }}>

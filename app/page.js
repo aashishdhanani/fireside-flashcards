@@ -34,18 +34,18 @@ export default function Home() {
   }
 
   return (
-    <Container maxWidth="100vw">
+    <Container maxWidth="100vw" sx={{ backgroundColor: '#2E2E2E', minHeight: '100vh', p: 2 }}>
       <Head>
         <title>Fireside Flashcards</title>
         <meta name="description" content="Create flashcard from your text" />
       </Head>
 
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: '#2E2E2E'}}>
         <Toolbar>
           <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
             <Typography 
               variant="h6"  
-              style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+              style={{ flexGrow: 1, textDecoration: 'none', color: '#FCD19C', cursor: 'pointer' }}
             >
               Fireside Flashcards
             </Typography>
@@ -68,10 +68,10 @@ export default function Home() {
           my: 4,
         }}
       >
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h2" sx={{ color: 'white' }} gutterBottom>
           Welcome to Fireside Flashcards
         </Typography>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" sx={{ color: 'white' }} gutterBottom>
           {' '}
           The easiest way to make flashcards from your text
         </Typography>
@@ -79,8 +79,8 @@ export default function Home() {
           Get Started
         </Button>
       </Box>
-      <Box sx = {{my: 6}}>
-        <Typography variant="h4" components="h2" gutterBottom>
+      <Box sx = {{my: 6, color: 'white'}}>
+        <Typography variant="h4" sx={{ color: 'white' }} components="h2" gutterBottom>
           Features
         </Typography>
         <Grid container spacing={4}>
@@ -109,11 +109,11 @@ export default function Home() {
       </Box>
 
       {/* Pricing Section */}
-      <Box sx={{ my: 6, textAlign: 'center' }}>
+      <Box sx={{ my: 6, textAlign: 'center', color: 'white' }}>
         <Typography variant="h4" component="h2" gutterBottom>Pricing</Typography>
         <Grid container spacing={4} justifyContent="center">
           {/* Pricing plans */}
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={5}>
             <Box 
               sx={{ 
                 textAlign: 'center',
@@ -124,21 +124,21 @@ export default function Home() {
               }}
             >
               <Typography variant="h5" gutterBottom>
-                Basic Plan
+                Default Plan
               </Typography>
               <Typography variant="h6" gutterBottom>
-                $5 / month
+                Free
               </Typography>
               <Typography>
                 {' '}
                 Access to basic flashcard features and limited storage.
               </Typography>
-              <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-                Choose Basic
+              <Button variant="contained" color="primary" sx={{ mt: 2 }} href="/profile">
+                Choose Default
               </Button>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={5}>
             <Box 
               sx={{ 
                 textAlign: 'center',
@@ -152,7 +152,7 @@ export default function Home() {
                 Pro Plan
               </Typography>
               <Typography variant="h6" gutterBottom>
-                $25 / month
+                $10 / month
               </Typography>
               <Typography>
                 {' '}

@@ -78,13 +78,13 @@ export default function Profile() {
     };
 
     return (
-        <Container maxWidth="100%">
-            <AppBar position="static">
+        <Container maxWidth="100%" sx={{ backgroundColor: '#2E2E2E', minHeight: '100vh', p: 0 }}>
+            <AppBar position="static" sx={{ backgroundColor: '#2E2E2E'}}>
                 <Toolbar>
                 <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
                     <Typography 
                     variant="h6"  
-                    style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                    style={{ flexGrow: 1, textDecoration: 'none', color: '#FCD19C', cursor: 'pointer' }}
                     >
                     Fireside Flashcards
                     </Typography>
@@ -102,7 +102,7 @@ export default function Profile() {
             </AppBar>
             <Fade in={true} timeout={1000}>
                 <Paper elevation={3} sx={{ p: 4, mt: 4, borderRadius: 2, backgroundColor: '#1C1C1C' }}>
-                    <Typography variant="h2" align="center" gutterBottom sx={{ fontWeight: 'bold', color: '#FBB966' }}>
+                    <Typography variant="h2" align="center" gutterBottom sx={{ fontWeight: 'bold', color: '#FCD19C' }}>
                         Your Profile
                     </Typography>
                     <form>
@@ -119,11 +119,11 @@ export default function Profile() {
                             </ProfileSection>
 
                             <ProfileSection title="Work Experience">
-                                <Typography variant="body1" gutterBottom sx={{ color: '#FBB966' }}>
+                                <Typography variant="body1" gutterBottom sx={{ color: '#FCD19C' }}>
                                     Add your relevant work experiences below:
                                 </Typography>
                                 {experiences.map((exp, index) => (
-                                    <Box key={index} sx={{ mb: 2, p: 2, border: '1px solid #FBB966', borderRadius: 2, backgroundColor: '#333' }}>
+                                    <Box key={index} sx={{ mb: 2, p: 2, border: '1px solid #FCD19C', borderRadius: 2, backgroundColor: '#333' }}>
                                         <Typography variant="body1" sx={{ color: '#fff' }}>
                                             {exp.Company} - {exp.Position}
                                         </Typography>
@@ -133,14 +133,14 @@ export default function Profile() {
                                         <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
                                             <Button
                                                 onClick={() => handleEdit(index)}
-                                                sx={{ color: '#FBB966' }}
+                                                sx={{ color: '#FCD19C' }}
                                                 startIcon={<EditIcon />}
                                             >
                                                 Edit
                                             </Button>
                                             <Button
                                                 onClick={() => handleDelete(index)}
-                                                sx={{ color: '#FBB966' }}
+                                                sx={{ color: '#FCD19C' }}
                                                 startIcon={<DeleteIcon />}
                                             >
                                                 Delete
@@ -152,7 +152,7 @@ export default function Profile() {
                                     variant="outlined"
                                     startIcon={<AddIcon />}
                                     onClick={handleClickOpen}
-                                    sx={{ mt: 2, borderColor: '#FBB966', color: '#FBB966' }}
+                                    sx={{ mt: 2, borderColor: '#FCD19C', color: '#FCD19C' }}
                                 >
                                     Add Work Experience
                                 </Button>
@@ -316,7 +316,7 @@ export default function Profile() {
                             endIcon={<SendIcon />}
                             sx={{
                                 mt: 4,
-                                backgroundColor: '#FBB966',
+                                backgroundColor: '#FCD19C',
                                 color: "black",
                                 ":hover": { backgroundColor: 'rgba(251, 185, 102, 0.7)' }
                             }}
@@ -333,7 +333,7 @@ export default function Profile() {
 
 const ProfileSection = ({ title, children }) => (
     <Grid item xs={12}>
-        <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#FBB966', mb: 2, textDecoration: 'underline' }}>
+        <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#FCD19C', mb: 2, textDecoration: 'underline' }}>
             {title}
         </Typography>
         {children}
@@ -351,10 +351,10 @@ const CustomTextField = ({ label, placeholder }) => (
         margin="normal"
         sx={{
             backgroundColor: '#333',
-            color: '#FBB966', 
+            color: '#FCD19C', 
             '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                    borderColor: '#FBB966', 
+                    borderColor: '#FCD19C', 
                 },
                 '&:hover fieldset': {
                     borderColor: '#fff', 
@@ -370,10 +370,10 @@ const CustomTextField = ({ label, placeholder }) => (
                 },
             },
             '& .MuiInputLabel-root': {
-                color: '#FBB966', 
+                color: '#FCD19C', 
             },
             '& .MuiInputLabel-root.Mui-focused': {
-                color: '#FBB966', 
+                color: '#FCD19C', 
             },
         }}
     />
