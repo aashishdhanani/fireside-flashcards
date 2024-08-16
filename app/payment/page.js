@@ -4,7 +4,9 @@ import { useUser } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
 import getStripe from '@/utils/get-stripe'
 import { useRouter } from 'next/navigation'
-import { Box, Button, CircularProgress, Typography, Container } from '@mui/material'
+import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
+import { Box, Button, CircularProgress, Typography, Container, AppBar, Toolbar } from '@mui/material'
+import Link from 'next/link'
 
 export default function PaymentPage() {
   const { isLoaded, isSignedIn, user } = useUser()
@@ -83,31 +85,54 @@ export default function PaymentPage() {
   }
 
   return (
-    <Container
-      maxWidth="100vw"
-      sx={{
-        backgroundColor: '#2E2E2E',
-        minHeight: '100vh',
-        p: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <Typography variant="h4" sx={{ color: '#FCD19C', mb: 4 }}>
-        Subscribe to Pro Plan
-      </Typography>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleCheckout}
-        disabled={loading}
-        sx={{ backgroundColor: '#FCD19C', color: '#2E2E2E', '&:hover': {backgroundColor: '#e0a44d',}, }}
+    <Container maxWidth="100vw" sx={{ backgroundColor: '#2E2E2E', minHeight: '100vh', p: 2 }}>
+      <AppBar position="static" sx={{ backgroundColor: '#2E2E2E'}}>
+        <Toolbar>
+          <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
+            <Typography 
+              variant="h6"  
+              style={{ flexGrow: 1, textDecoration: 'none', color: '#FCD19C', cursor: 'pointer' }}
+            >
+              Fireside Flashcards
+            </Typography>
+          </Link>
+          <Button color="inherit" href="/profile">Profile</Button>
+          <Button color="inherit" href="/generate">Generate</Button>
+          <Button color="inherit" href="/flashcards">Flashcards</Button>
+          <SignedOut>
+            <Button color="inherit" href="/sign-in">Login</Button>
+            <Button color="inherit" href="/sign-up">Sign Up</Button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </Toolbar>
+      </AppBar>
+      <Box
+        sx={{
+          backgroundColor: '#2E2E2E',
+          minHeight: '100vh',
+          p: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
-        {loading ? 'Processing...' : 'Checkout with Stripe'}
-      </Button>
+        <Typography variant="h4" sx={{ color: '#FCD19C', mb: 4 }}>
+          Subscribe to Pro Plan
+        </Typography>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleCheckout}
+          disabled={loading}
+          sx={{ backgroundColor: '#FCD19C', color: '#2E2E2E', '&:hover': {backgroundColor: '#e0a44d',}, }}
+        >
+          {loading ? 'Processing...' : 'Checkout with Stripe'}
+        </Button>
+      </Box>
     </Container>
   )
 }
