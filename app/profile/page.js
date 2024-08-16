@@ -27,8 +27,7 @@ export default function Profile() {
         certifications: '',
     });
     const [careerGoals, setCareerGoals] = useState({
-        shortTermGoals: '',
-        longTermGoals: '',
+        goals: '',
         visionIn5Years: '',
     });
     const [skills, setSkills] = useState({
@@ -65,8 +64,7 @@ export default function Profile() {
                     certifications: '',
                 });
                 setCareerGoals(data.careerGoals || {
-                    shortTermGoals: '',
-                    longTermGoals: '',
+                    goals: '',
                     visionIn5Years: '',
                 });
                 setSkills(data.skills || {
@@ -130,14 +128,6 @@ export default function Profile() {
     const saveProfile = async () => {
         // if (!user || !user.id) return;
 
-        console.log('Saving profile with data:', {
-            experiences,
-            education,
-            careerGoals,
-            skills,
-            additionalInfo
-        });
-
         const userDocRef = doc(collection(db, 'users'), user.id);
 
         try {
@@ -193,7 +183,8 @@ export default function Profile() {
                                     variant="outlined"
                                     margin="normal"
                                     value={education.highestEducation}
-                                    onChange={(e) => setEducation({ ...education, highestEducation: e.target.value })}
+                                    onChange={(e) => setEducation({ ...education, highestEducation: e.target.value })
+                                    }
                                 />
                                 <CustomTextField
                                     label="Relevant certifications"
@@ -376,8 +367,8 @@ export default function Profile() {
                                     fullWidth
                                     variant="outlined"
                                     margin="normal"
-                                    value={careerGoals.shortTermGoals}
-                                    onChange={(e) => setCareerGoals({ ...careerGoals, shortTermGoals: e.target.value })}
+                                    value={careerGoals.goals}
+                                    onChange={(e) => setCareerGoals({ ...careerGoals, goals: e.target.value })}
                                 />
                                 <CustomTextField
                                     label="Where do you see yourself in 5 years?"
@@ -456,7 +447,7 @@ const ProfileSection = ({ title, children }) => (
     </Grid>
 );
 
-const CustomTextField = ({ label, placeholder }) => (
+const CustomTextField = ({ label, placeholder, value, onChange }) => (
     <TextField
         fullWidth
         variant="outlined"
@@ -465,6 +456,8 @@ const CustomTextField = ({ label, placeholder }) => (
         multiline
         rows={2}
         margin="normal"
+        value={value}
+        onChange={onChange}
         sx={{
             backgroundColor: '#333',
             color: '#FCD19C', 
