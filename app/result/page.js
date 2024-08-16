@@ -6,6 +6,8 @@ import { useUser } from '@clerk/nextjs'
 import getStripe from "@/utils/get-stripe"
 import { useSearchParams } from "next/navigation"
 import { Box, CircularProgress, Container, Typography, AppBar, Toolbar, Button } from "@mui/material"
+import { db } from "@/firebase";
+import { doc, updateDoc } from "firebase/firestore";
 import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
 import Link from 'next/link'
 
@@ -26,18 +28,23 @@ const ResultPage = () => {
             try {
                 const res = await fetch(`/api/checkout_session?session_id=${session_id}`)
                 const sessionData = await res.json()
+                console.log(sessionData)
                 if (res.ok) {
+                    console.log("response is ok")
                     setSession(sessionData)
-                    if (sessionData.payment === "paid" && user) {
+                    if (sessionData.payment_status === "paid" && user) {
+                        console.log("payment status is paid and user exists")
                         // Update user in Firestore
                         const userDocRef = doc(db, 'users', user.id) // Assuming user.id is the Firestore document ID
                         await updateDoc(userDocRef, { paidUser: true })
                     }
                 } else {
+                    console.log("payment status is not paid or user not exists")
                     setError(sessionData.error)
                 }
             }
             catch (err) {
+                console.log(err)
                 setError("An error occurred")
             } finally {
                 setLoading(false)
@@ -107,11 +114,11 @@ const ResultPage = () => {
                 </SignedIn>
                 </Toolbar>
             </AppBar>
-            {session.payment === "paid" ? (
+            {session.payment_status === "paid" ? (
                 <>
                     <Typography variant="h4" sx={{textAlign: 'center', mt: 4, color: 'white'}}>Thank you for purchasing</Typography>
                     <Box sx={{textAlign: 'center', mt: 22}}>
-                        <Typography variant="h6">
+                        <Typography variant="h6" sx={{textAlign: 'center', mt: 4, color: 'white', mb: 4,}}>
                             Session ID: {session_id}
                         </Typography>
                         <Typography variant="body1" sx={{color: 'white'}}>
