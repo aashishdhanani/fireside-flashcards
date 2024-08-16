@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useUser } from '@clerk/nextjs'
 import getStripe from "@/utils/get-stripe"
 import { useSearchParams } from "next/navigation"
 import { Box, CircularProgress, Container, Typography, AppBar, Toolbar, Button } from "@mui/material"
@@ -9,6 +10,7 @@ import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
 import Link from 'next/link'
 
 const ResultPage = () => {
+    const { user } = useUser()
     const router = useRouter()
     const searchParams = useSearchParams()
     const session_id = searchParams.get('session_id')
@@ -26,6 +28,11 @@ const ResultPage = () => {
                 const sessionData = await res.json()
                 if (res.ok) {
                     setSession(sessionData)
+                    if (sessionData.payment === "paid" && user) {
+                        // Update user in Firestore
+                        const userDocRef = doc(db, 'users', user.id) // Assuming user.id is the Firestore document ID
+                        await updateDoc(userDocRef, { paidUser: true })
+                    }
                 } else {
                     setError(sessionData.error)
                 }
@@ -38,7 +45,7 @@ const ResultPage = () => {
         }
 
         fetchCheckoutSession()
-    }, [session_id])
+    }, [session_id, user])
 
     if (loading) {
         return (
