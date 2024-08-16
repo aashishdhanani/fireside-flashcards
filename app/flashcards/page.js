@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react'
 import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { useRouter } from 'next/navigation'
-import { Card, CardActionArea, CardContent, Container, Typography, Grid, Button, AppBar, Toolbar } from '@mui/material'
+import { Card, CardActionArea, CardContent, Container, Typography, Grid, Button, AppBar, Toolbar, CircularProgress, Box } from '@mui/material'
 import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
 import Link from 'next/link'
 
@@ -43,7 +43,25 @@ export default function Flashcards() {
     }
 
     if (!isLoaded || !isSignedIn) {
-        return <Typography>Loading...</Typography> // Display loading or message until user status is determined
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '100vh',
+                    backgroundColor: '#2E2E2E',
+                    color: '#FCD19C',
+                    textAlign: 'center'
+                }}
+            >
+                <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
+                <Typography variant="h6" sx={{ color: '#FCD19C' }}>
+                    Loading your cards...
+                </Typography>
+            </Box>
+        )
     }
 
     return (

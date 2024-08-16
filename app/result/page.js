@@ -42,16 +42,23 @@ const ResultPage = () => {
 
     if (loading) {
         return (
-            <Container 
-                maxWidth='100vw'
+            <Box
                 sx={{
-                    textAlign: 'center',
-                    mt: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '100vh',
+                    backgroundColor: '#2E2E2E',
+                    color: '#FCD19C',
+                    textAlign: 'center'
                 }}
             >
-                <CircularProgress />
-                <Typography variant='h6'> Loading... </Typography>
-            </Container>
+                <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
+                <Typography variant="h6" sx={{ color: '#FCD19C' }}>
+                    Processing Payment...
+                </Typography>
+            </Box>
         )
     }
 

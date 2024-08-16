@@ -2,7 +2,7 @@
 import { useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react";
-import { Container, Box, Typography, Paper, TextField, Button, Grid, CardActionArea, Card, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, AppBar, Toolbar } from '@mui/material'
+import { Container, Box, Typography, Paper, TextField, Button, Grid, CardActionArea, Card, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, AppBar, Toolbar, CircularProgress } from '@mui/material'
 import { db } from "@/firebase";
 import { doc, collection, setDoc, getDoc, writeBatch } from "firebase/firestore";
 import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
@@ -24,7 +24,25 @@ export default function Generate() {
     }, [isLoaded, isSignedIn, router])
 
     if (!isLoaded || !isSignedIn) {
-        return <Typography>Loading...</Typography> // Display loading or message until user status is determined
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '100vh',
+                    backgroundColor: '#2E2E2E',
+                    color: '#FCD19C',
+                    textAlign: 'center'
+                }}
+            >
+                <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
+                <Typography variant="h6" sx={{ color: '#FCD19C' }}>
+                    Loading your profile...
+                </Typography>
+            </Box>
+        )
     }
 
     const handleSubmit = async () => {
