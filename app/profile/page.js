@@ -15,11 +15,30 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FormControlLabel, Checkbox } from '@mui/material';
 import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
+import { db } from "@/firebase";
+import { doc, collection, setDoc, getDoc } from "firebase/firestore";
 import Link from 'next/link'
 
 export default function Profile() {
     const { isLoaded, isSignedIn, user } = useUser()
     const [experiences, setExperiences] = useState([]);
+    const [education, setEducation] = useState({
+        highestEducation: '',
+        certifications: '',
+    });
+    const [careerGoals, setCareerGoals] = useState({
+        shortTermGoals: '',
+        longTermGoals: '',
+        visionIn5Years: '',
+    });
+    const [skills, setSkills] = useState({
+        topSkills: '',
+        strengthsAndAreas: '',
+    });
+    const [additionalInfo, setAdditionalInfo] = useState({
+        otherInfo: '',
+    });
+    
     const [open, setOpen] = React.useState(false);
     const [currentlyWorking, setCurrentlyWorking] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
@@ -27,10 +46,41 @@ export default function Profile() {
     const router = useRouter()
 
     useEffect(() => {
-        if (isLoaded && !isSignedIn) {
-            router.push('/sign-in') // Redirect to sign-in page if not signed in
+        if (isLoaded && isSignedIn) {
+            fetchUserProfile(); // Fetch user profile data if signed in
+        } else if (isLoaded && !isSignedIn) {
+            router.push('/sign-in'); // Redirect to sign-in page if not signed in
         }
     }, [isLoaded, isSignedIn, router])
+
+    const fetchUserProfile = async () => {
+        const userDocRef = doc(collection(db, 'users'), user.id);
+        try {
+            const docSnap = await getDoc(userDocRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                setExperiences(data.experiences || []);
+                setEducation(data.education || {
+                    highestEducation: '',
+                    certifications: '',
+                });
+                setCareerGoals(data.careerGoals || {
+                    shortTermGoals: '',
+                    longTermGoals: '',
+                    visionIn5Years: '',
+                });
+                setSkills(data.skills || {
+                    topSkills: '',
+                    strengthsAndAreas: '',
+                });
+                setAdditionalInfo(data.additionalInfo || {
+                    otherInfo: '',
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+        }
+    };
 
     if (!isLoaded || !isSignedIn) {
         return <Typography>Loading...</Typography> // Display loading or message until user status is determined
@@ -77,6 +127,34 @@ export default function Profile() {
         }
     };
 
+    const saveProfile = async () => {
+        // if (!user || !user.id) return;
+
+        console.log('Saving profile with data:', {
+            experiences,
+            education,
+            careerGoals,
+            skills,
+            additionalInfo
+        });
+
+        const userDocRef = doc(collection(db, 'users'), user.id);
+
+        try {
+            await setDoc(userDocRef, {
+                experiences,
+                education,
+                careerGoals,
+                skills,
+                additionalInfo
+            }, { merge: true });
+            alert('Profile updated successfully!');
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            alert('Error updating profile.');
+        }
+    };
+
     return (
         <Container maxWidth="100%" sx={{ backgroundColor: '#2E2E2E', minHeight: '100vh', p: 0 }}>
             <AppBar position="static" sx={{ backgroundColor: '#2E2E2E'}}>
@@ -111,10 +189,20 @@ export default function Profile() {
                                 <CustomTextField
                                     label="Highest level of education and field of study"
                                     placeholder="e.g., Bachelor's in Computer Science"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={education.highestEducation}
+                                    onChange={(e) => setEducation({ ...education, highestEducation: e.target.value })}
                                 />
                                 <CustomTextField
                                     label="Relevant certifications"
                                     placeholder="e.g., AWS Certified Solutions Architect"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={education.certifications}
+                                    onChange={(e) => setEducation({ ...education, certifications: e.target.value })}
                                 />
                             </ProfileSection>
 
@@ -285,10 +373,20 @@ export default function Profile() {
                                 <CustomTextField
                                     label="Short-term and long-term goals"
                                     placeholder="Describe your career aspirations"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={careerGoals.shortTermGoals}
+                                    onChange={(e) => setCareerGoals({ ...careerGoals, shortTermGoals: e.target.value })}
                                 />
                                 <CustomTextField
                                     label="Where do you see yourself in 5 years?"
                                     placeholder="Your future vision"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={careerGoals.visionIn5Years}
+                                    onChange={(e) => setCareerGoals({ ...careerGoals, visionIn5Years: e.target.value })}
                                 />
                             </ProfileSection>
 
@@ -296,10 +394,20 @@ export default function Profile() {
                                 <CustomTextField
                                     label="Top three professional skills"
                                     placeholder="e.g., Leadership, Problem-solving, Python"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={skills.topSkills}
+                                    onChange={(e) => setSkills({ ...skills, topSkills: e.target.value })}
                                 />
                                 <CustomTextField
                                     label="Strengths and areas to improve"
                                     placeholder="Professional strengths and development areas"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={skills.strengthsAndAreas}
+                                    onChange={(e) => setSkills({ ...skills, strengthsAndAreas: e.target.value })}
                                 />
                             </ProfileSection>
 
@@ -307,6 +415,11 @@ export default function Profile() {
                                 <CustomTextField
                                     label="Anything else you'd like to add"
                                     placeholder="Other relevant information"
+                                    fullWidth
+                                    variant="outlined"
+                                    margin="normal"
+                                    value={additionalInfo.otherInfo}
+                                    onChange={(e) => setAdditionalInfo({ ...additionalInfo, otherInfo: e.target.value })}
                                 />
                             </ProfileSection>
                         </Grid>
@@ -320,7 +433,10 @@ export default function Profile() {
                                 color: "#000",
                                 ":hover": {backgroundColor: '#e0a44d',}
                             }}
-                            onClick={() => alert('Profile updated!')}
+                            onClick={() => {
+                                saveProfile();
+                                alert('Profile updated!');
+                            }}
                         >
                             Update Profile
                         </Button>
