@@ -4,6 +4,7 @@ import getStripe from '@/utils/get-stripe'
 import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
 import { Container, AppBar, Toolbar, Typography, Button, Box, Grid } from "@mui/material";
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function Home() {
 
@@ -35,13 +36,22 @@ export default function Home() {
   return (
     <Container maxWidth="100vw">
       <Head>
-        <title>Flashcard SaaS</title>
+        <title>Fireside Flashcards</title>
         <meta name="description" content="Create flashcard from your text" />
       </Head>
 
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>Fireside Flashcards</Typography>
+          <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
+            <Typography 
+              variant="h6"  
+              style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+            >
+              Fireside Flashcards
+            </Typography>
+          </Link>
+          <Button color="inherit" href="/profile">Profile</Button>
+          <Button color="inherit" href="/generate">Generate</Button>
           <SignedOut>
             <Button color="inherit" href="/sign-in">Login</Button>
             <Button color="inherit" href="/sign-up">Sign Up</Button>
@@ -65,7 +75,7 @@ export default function Home() {
           {' '}
           The easiest way to make flashcards from your text
         </Typography>
-        <Button variant="contained" color="primary" sc = {{mt:2}}>
+        <Button variant="contained" color="primary" sc = {{mt:2}} href="/profile">
           Get Started
         </Button>
       </Box>

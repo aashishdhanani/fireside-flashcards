@@ -1,7 +1,9 @@
 "use client"
 import * as React from 'react';
+import { useUser } from "@clerk/nextjs"
+import { useRouter } from "next/navigation"
 import { Box, Button, Container, TextField, Typography, Paper, Grid, Fade } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,11 +16,23 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { FormControlLabel, Checkbox } from '@mui/material';
 
 export default function Profile() {
+    const { isLoaded, isSignedIn, user } = useUser()
     const [experiences, setExperiences] = useState([]);
     const [open, setOpen] = React.useState(false);
     const [currentlyWorking, setCurrentlyWorking] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
     const [currentExperience, setCurrentExperience] = useState({});
+    const router = useRouter()
+
+    useEffect(() => {
+        if (isLoaded && !isSignedIn) {
+            router.push('/sign-in') // Redirect to sign-in page if not signed in
+        }
+    }, [isLoaded, isSignedIn, router])
+
+    if (!isLoaded || !isSignedIn) {
+        return <Typography>Loading...</Typography> // Display loading or message until user status is determined
+    }
 
     const handleCheckboxChange = (event) => {
         setCurrentlyWorking(event.target.checked);

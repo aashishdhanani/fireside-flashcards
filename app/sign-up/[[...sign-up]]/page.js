@@ -7,21 +7,21 @@ export default function SignUpPage() {
         <Container maxWidth="100vw">
             <AppBar position="static" sc={{backgroundColor: "#3f51b5"}}>
                 <Toolbar>
-                    <Typography 
-                        variant="h6" 
-                        sx={{
-                            flexGrow: 1
-                        }}
-                    >
+                    <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
+                        <Typography 
+                        variant="h6"  
+                        style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                        >
                         Fireside Flashcards
-                    </Typography>
+                        </Typography>
+                    </Link>
                     <Button color="inherit">
-                        <Link href="/sign-in" passHref>
+                        <Link style={{textDecoration: 'none', color: 'inherit', cursor: 'pointer' }} href="/sign-in" passHref>
                             Login
                         </Link>
                     </Button>
                     <Button color="inherit">
-                        <Link href="/sign-up" passHref>
+                        <Link style={{textDecoration: 'none', color: 'inherit', cursor: 'pointer' }} href="/sign-up" passHref>
                             Sign Up
                         </Link>
                     </Button>
