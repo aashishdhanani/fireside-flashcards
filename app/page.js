@@ -69,7 +69,7 @@ export default function Home() {
         }}
       >
         <Typography variant="h2" sx={{ color: 'white' }} gutterBottom>
-          Welcome to Fireside Flashcards
+          Welcome to <span style={{ color: '#FCD19C' }}> Fireside Flashcards</span>
         </Typography>
         <Typography variant="h5" sx={{ color: 'white' }} gutterBottom>
           {' '}
@@ -79,7 +79,7 @@ export default function Home() {
           Get Started
         </Button>
       </Box>
-      <Box sx = {{my: 6, color: 'white'}}>
+      <Box sx = {{textAlign: 'center', my: 6, color: 'white'}}>
         <Typography variant="h4" sx={{ color: 'white' }} components="h2" gutterBottom>
           Features
         </Typography>
@@ -110,7 +110,7 @@ export default function Home() {
 
       {/* Pricing Section */}
       <Box sx={{ my: 6, textAlign: 'center', color: 'white' }}>
-        <Typography variant="h4" component="h2" gutterBottom>Pricing</Typography>
+        <Typography variant="h4" component="h2" gutterBottom sx={{ my: 4 }}>Pricing</Typography>
         <Grid container spacing={4} justifyContent="center">
           {/* Pricing plans */}
           <Grid item xs={12} sm={6} md={5}>
