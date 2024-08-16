@@ -52,6 +52,7 @@ export default function Home() {
           </Link>
           <Button color="inherit" href="/profile">Profile</Button>
           <Button color="inherit" href="/generate">Generate</Button>
+          <Button color="inherit" href="/flashcards">Flashcards</Button>
           <SignedOut>
             <Button color="inherit" href="/sign-in">Login</Button>
             <Button color="inherit" href="/sign-up">Sign Up</Button>
@@ -80,7 +81,7 @@ export default function Home() {
         </Button>
       </Box>
       <Box sx = {{textAlign: 'center', my: 6, color: 'white'}}>
-        <Typography variant="h4" sx={{ color: 'white' }} components="h2" gutterBottom>
+        <Typography variant="h4" sx={{ color: '#FCD19C' }} components="h2" gutterBottom>
           Features
         </Typography>
         <Grid container spacing={4}>
@@ -110,7 +111,7 @@ export default function Home() {
 
       {/* Pricing Section */}
       <Box sx={{ my: 6, textAlign: 'center', color: 'white' }}>
-        <Typography variant="h4" component="h2" gutterBottom sx={{ my: 4 }}>Pricing</Typography>
+        <Typography variant="h4" component="h2" gutterBottom sx={{ my: 4, color: '#FCD19C' }}>Pricing</Typography>
         <Grid container spacing={4} justifyContent="center">
           {/* Pricing plans */}
           <Grid item xs={12} sm={6} md={5}>
@@ -123,7 +124,7 @@ export default function Home() {
                 borderRadius: 2, 
               }}
             >
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" sx={{ color: '#FCD19C' }} gutterBottom>
                 Default Plan
               </Typography>
               <Typography variant="h6" gutterBottom>
@@ -148,7 +149,7 @@ export default function Home() {
                 borderRadius: 2, 
               }}
             >
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" sx={{ color: '#FCD19C' }} gutterBottom>
                 Pro Plan
               </Typography>
               <Typography variant="h6" gutterBottom>

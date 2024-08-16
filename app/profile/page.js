@@ -159,6 +159,7 @@ export default function Profile() {
                 </Link>
                 <Button color="inherit" href="/profile">Profile</Button>
                 <Button color="inherit" href="/generate">Generate</Button>
+                <Button color="inherit" href="/flashcards">Flashcards</Button>
                 <SignedOut>
                     <Button color="inherit" href="/sign-in">Login</Button>
                     <Button color="inherit" href="/sign-up">Sign Up</Button>
