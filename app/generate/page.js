@@ -138,6 +138,7 @@ export default function Generate() {
                         color="primary"
                         onClick={handleSubmit}
                         fullWidth
+                        sx={{backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',},}}
                     >
                         Submit
                     </Button>

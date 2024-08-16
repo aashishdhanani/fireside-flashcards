@@ -75,7 +75,7 @@ export default function Home() {
           {' '}
           The easiest way to make flashcards from your text
         </Typography>
-        <Button variant="contained" color="primary" sc = {{mt:2}} href="/profile">
+        <Button variant="contained" color="primary" sx = {{mt:2, backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',},}} href="/profile">
           Get Started
         </Button>
       </Box>
@@ -133,7 +133,7 @@ export default function Home() {
                 {' '}
                 Access to basic flashcard features and limited storage.
               </Typography>
-              <Button variant="contained" color="primary" sx={{ mt: 2 }} href="/profile">
+              <Button variant="contained" color="primary" sx={{ mt: 2, backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',}, }} href="/profile">
                 Choose Default
               </Button>
             </Box>
@@ -158,7 +158,7 @@ export default function Home() {
                 {' '}
                 Access to premium flashcard features and unlimited storage.
               </Typography>
-              <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleSubmit}>
+              <Button variant="contained" color="primary" sx={{ mt: 2, backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',}, }} onClick={handleSubmit}>
                 Choose Pro
               </Button>
             </Box>

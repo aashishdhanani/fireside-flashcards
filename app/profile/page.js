@@ -317,8 +317,8 @@ export default function Profile() {
                             sx={{
                                 mt: 4,
                                 backgroundColor: '#FCD19C',
-                                color: "black",
-                                ":hover": { backgroundColor: 'rgba(251, 185, 102, 0.7)' }
+                                color: "#000",
+                                ":hover": {backgroundColor: '#e0a44d',}
                             }}
                             onClick={() => alert('Profile updated!')}
                         >
