@@ -70,8 +70,8 @@ const ResultPage = () => {
     }
 
     return (
-        <Container maxWidth='100vw'>
-            <AppBar position="static">
+        <Container maxWidth='100vw' sx={{ backgroundColor: '#2E2E2E', minHeight: '100vh', p: 2 }}>
+            <AppBar position="static" sx={{ backgroundColor: '#2E2E2E'}}>
                 <Toolbar>
                 <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
                     <Typography 
@@ -95,22 +95,22 @@ const ResultPage = () => {
             </AppBar>
             {session.payment === "paid" ? (
                 <>
-                    <Typography variant="h4" sx={{textAlign: 'center', mt: 4}}>Thank you for purchasing</Typography>
+                    <Typography variant="h4" sx={{textAlign: 'center', mt: 4, color: 'white'}}>Thank you for purchasing</Typography>
                     <Box sx={{textAlign: 'center', mt: 22}}>
                         <Typography variant="h6">
                             Session ID: {session_id}
                         </Typography>
-                        <Typography variant="body1">
+                        <Typography variant="body1" sx={{color: 'white'}}>
                             We have received your payment. You will receive an email with the order details shortly.
                         </Typography>
                     </Box>
                 </>
             ) : (
                 <>
-                    <Typography variant="h4" sx={{textAlign: 'center', mt: 4}}>
+                    <Typography variant="h4" sx={{textAlign: 'center', mt: 4, color: 'white'}}>
                         Payment Failed
                     </Typography>
-                    <Box sx={{textAlign: 'center', mt: 22}}>
+                    <Box sx={{textAlign: 'center', mt: 22, color: 'white'}}>
                         <Typography variant="body1">
                             Your payment was not successful. Please try again.
                         </Typography>
