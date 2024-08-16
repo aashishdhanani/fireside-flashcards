@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
-import { Box, Button, Container, TextField, Typography, Paper, Grid, Fade } from "@mui/material";
+import { Box, Button, Container, TextField, Typography, Paper, Grid, Fade, AppBar, Toolbar } from "@mui/material";
 import { useState, useEffect } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
@@ -14,6 +14,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FormControlLabel, Checkbox } from '@mui/material';
+import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
+import Link from 'next/link'
 
 export default function Profile() {
     const { isLoaded, isSignedIn, user } = useUser()
@@ -77,6 +79,27 @@ export default function Profile() {
 
     return (
         <Container maxWidth="100%">
+            <AppBar position="static">
+                <Toolbar>
+                <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
+                    <Typography 
+                    variant="h6"  
+                    style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                    >
+                    Fireside Flashcards
+                    </Typography>
+                </Link>
+                <Button color="inherit" href="/profile">Profile</Button>
+                <Button color="inherit" href="/generate">Generate</Button>
+                <SignedOut>
+                    <Button color="inherit" href="/sign-in">Login</Button>
+                    <Button color="inherit" href="/sign-up">Sign Up</Button>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
+                </Toolbar>
+            </AppBar>
             <Fade in={true} timeout={1000}>
                 <Paper elevation={3} sx={{ p: 4, mt: 4, borderRadius: 2, backgroundColor: '#1C1C1C' }}>
                     <Typography variant="h2" align="center" gutterBottom sx={{ fontWeight: 'bold', color: '#FBB966' }}>

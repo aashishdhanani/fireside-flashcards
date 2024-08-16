@@ -2,9 +2,11 @@
 import { useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react";
-import { Container, Box, Typography, Paper, TextField, Button, Grid, CardActionArea, Card, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material'
+import { Container, Box, Typography, Paper, TextField, Button, Grid, CardActionArea, Card, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, AppBar, Toolbar } from '@mui/material'
 import { db } from "@/firebase";
 import { doc, collection, setDoc, getDoc, writeBatch } from "firebase/firestore";
+import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
+import Link from 'next/link'
 
 export default function Generate() {
     const { isLoaded, isSignedIn, user } = useUser()
@@ -84,7 +86,28 @@ export default function Generate() {
     }
 
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="100vw">
+            <AppBar position="static">
+                <Toolbar>
+                <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
+                    <Typography 
+                    variant="h6"  
+                    style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                    >
+                    Fireside Flashcards
+                    </Typography>
+                </Link>
+                <Button color="inherit" href="/profile">Profile</Button>
+                <Button color="inherit" href="/generate">Generate</Button>
+                <SignedOut>
+                    <Button color="inherit" href="/sign-in">Login</Button>
+                    <Button color="inherit" href="/sign-up">Sign Up</Button>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
+                </Toolbar>
+            </AppBar>
             <Box
                 sx={{
                     mt: 4,

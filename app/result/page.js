@@ -4,7 +4,9 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import getStripe from "@/utils/get-stripe"
 import { useSearchParams } from "next/navigation"
-import { Box, CircularProgress, Container, Typography } from "@mui/material"
+import { Box, CircularProgress, Container, Typography, AppBar, Toolbar, Button } from "@mui/material"
+import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
+import Link from 'next/link'
 
 const ResultPage = () => {
     const router = useRouter()
@@ -68,17 +70,32 @@ const ResultPage = () => {
     }
 
     return (
-        <Container 
-            maxWidth='100vw'
-            sx={{
-                textAlign: 'center',
-                mt: 4,
-            }}
-        >
+        <Container maxWidth='100vw'>
+            <AppBar position="static">
+                <Toolbar>
+                <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
+                    <Typography 
+                    variant="h6"  
+                    style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+                    >
+                    Fireside Flashcards
+                    </Typography>
+                </Link>
+                <Button color="inherit" href="/profile">Profile</Button>
+                <Button color="inherit" href="/generate">Generate</Button>
+                <SignedOut>
+                    <Button color="inherit" href="/sign-in">Login</Button>
+                    <Button color="inherit" href="/sign-up">Sign Up</Button>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
+                </Toolbar>
+            </AppBar>
             {session.payment === "paid" ? (
                 <>
-                    <Typography variant="h4">Thank you for purchasing</Typography>
-                    <Box sx={{mt: 22}}>
+                    <Typography variant="h4" sx={{textAlign: 'center', mt: 4}}>Thank you for purchasing</Typography>
+                    <Box sx={{textAlign: 'center', mt: 22}}>
                         <Typography variant="h6">
                             Session ID: {session_id}
                         </Typography>
@@ -89,8 +106,10 @@ const ResultPage = () => {
                 </>
             ) : (
                 <>
-                    <Typography variant="h4">Payment Failed</Typography>
-                    <Box sx={{mt: 22}}>
+                    <Typography variant="h4" sx={{textAlign: 'center', mt: 4}}>
+                        Payment Failed
+                    </Typography>
+                    <Box sx={{textAlign: 'center', mt: 22}}>
                         <Typography variant="body1">
                             Your payment was not successful. Please try again.
                         </Typography>
