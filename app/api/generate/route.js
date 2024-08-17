@@ -3,34 +3,24 @@ import Groq from "groq-sdk";
 import { db } from '../../../firebase'; 
 import { doc, getDoc } from 'firebase/firestore';
 
-const systemPrompt = `
-You are a flashcard creator. Your task is to create a set of flashcards to help the user prepare for an interview. Each flashcard should have a clear question or prompt on the front, and a concise, accurate answer on the back. Use the user's background details to generate interview questions and help structure the answers based on their experience.
+const systemPrompt = 
+`
+Create flashcards to help the user prepare for interviews. 
+Each flashcard should have a clear generic behavioral interview question, and a concise, accurate answer on the back based on the user's given background ONLY and nothing else. 
+Use the user's background ONLY to structure the answers.
 
-Guidelines:
 
-Question/Prompt Format:
-
-- Ask questions that are commonly asked in interviews.
+- Tailor questions to the user's experience, skills, and the job role they are targeting.
 - For behavior-based questions, use "Describe a time when..." or "How did you handle...?"
 - For technical questions, use "Explain how you would..." or "What is your experience with...?"
-
-Answer Format:
-
-- Only provide a concise, direct response based on the user's background details.
-- Tailor answers by using the user's background details.
-- Highlight the user's achievements, skills, and relevant experience.
-- Only structure answers using the STAR method (Situation, Task, Action, Result) for behavioral questions.
-- Answers should be based on an Anecdote from the user's background.
-
-Subject Coverage:
-
-- Ensure the questions cover key areas relevant to the user's background and the job role.
+- Structure answers using the STAR method (Situation, Task, Action, Result) for behavioral questions.
+- Ensure questions are relevant to the user's background.
 - Include questions that explore the user's technical skills, problem-solving abilities, and cultural fit.
 
 Flashcard Set Requirements:
 
 - Generate 10 personalized flashcards.
-- Balance between behavioral and situational questions.
+- Balance between behavioral, technical, and situational questions.
 
 Return in the following JSON format:
 {
@@ -42,7 +32,6 @@ Return in the following JSON format:
     ]
 }
 `;
-
 
 
 export async function POST(req) {
@@ -125,7 +114,7 @@ export async function POST(req) {
         const userPrompt = `
             Here is the user's background information: ${backgroundDetails}
             
-            Now, generate answers to the flashcards based on this background.
+            Now, generate flashcards based on this background.
         `;
 
         // Call the Groq API for generating flashcards
