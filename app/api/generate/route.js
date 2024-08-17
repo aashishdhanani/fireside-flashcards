@@ -11,15 +11,16 @@ Guidelines:
 Question/Prompt Format:
 
 - Ask questions that are commonly asked in interviews.
-- Tailor questions to the user's experience, skills, and the job role they are targeting.
 - For behavior-based questions, use "Describe a time when..." or "How did you handle...?"
 - For technical questions, use "Explain how you would..." or "What is your experience with...?"
 
 Answer Format:
 
-- Provide a concise, direct response based on the user's background.
+- Only provide a concise, direct response based on the user's background details.
+- Tailor answers by using the user's background details.
 - Highlight the user's achievements, skills, and relevant experience.
-- Structure answers using the STAR method (Situation, Task, Action, Result) for behavioral questions.
+- Only structure answers using the STAR method (Situation, Task, Action, Result) for behavioral questions.
+- Answers should be based on an Anecdote from the user's background.
 
 Subject Coverage:
 
@@ -29,7 +30,7 @@ Subject Coverage:
 Flashcard Set Requirements:
 
 - Generate 10 personalized flashcards.
-- Balance between behavioral, technical, and situational questions.
+- Balance between behavioral and situational questions.
 
 Return in the following JSON format:
 {
@@ -67,20 +68,64 @@ export async function POST(req) {
         const userData = userSnap.data();
 
         const { experiences, education, careerGoals, skills, additionalInfo } = userData;
+        console.log(userData)
+
+        // Extract experiences
+        const experienceDetails = experiences.map(exp => `
+            Position: ${exp.Position}
+            Company: ${exp.Company}
+            Description: ${exp.Description}
+            Start Date: ${exp['Start Date']}
+            Currently Working: ${exp.currentlyWorking ? 'Yes' : 'No'}
+            Skills: ${exp.Skills}
+            Personal Experience: ${exp['Personal Experience']}
+        `).join('\n');
+
+        // Extract skills
+        const skillDetails = `
+            Top Skills: ${skills.topSkills}
+            Strengths and Areas of Improvement: ${skills.strengthsAndAreas}
+        `;
+
+        // Extract education
+        const educationDetails = `
+            Highest Education: ${education.highestEducation}
+            Certifications: ${education.certifications}
+        `;
+
+        // Extract career goals
+        const careerGoalDetails = `
+            Goals: ${careerGoals.goals}
+            Vision in 5 Years: ${careerGoals.visionIn5Years}
+        `;
+
+        // Extract additional info
+        const additionalInfoDetails = `
+            Additional Info: ${additionalInfo.otherInfo}
+        `;
 
         // Construct the background details
         const backgroundDetails = `
-            Experiences: ${experiences}
-            Education: Highest Education: ${education}, 
-            Career Goals: Goals: ${careerGoals}
-            Skills: Top Skills: ${skills},
-            Additional Info: ${additionalInfo}
+            Experiences: 
+            ${experienceDetails}
+
+            Education: 
+            ${educationDetails}
+
+            Career Goals: 
+            ${careerGoalDetails}
+
+            Skills: 
+            ${skillDetails}
+
+            Additional Info: 
+            ${additionalInfoDetails}
         `;
 
         const userPrompt = `
             Here is the user's background information: ${backgroundDetails}
             
-            Now, generate flashcards based on this background.
+            Now, generate answers to the flashcards based on this background.
         `;
 
         // Call the Groq API for generating flashcards
