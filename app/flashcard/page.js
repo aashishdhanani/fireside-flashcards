@@ -13,6 +13,7 @@ export default function Flashcard(){
     const {isLoaded, isSignedIn, user} = useUser()
     const [flashcards, setFlashcards] = useState([])
     const [flipped, setFlipped] = useState([])
+    const [collectionName, setCollectionName] = useState('')
     const router = useRouter()
 
     const searchParams = useSearchParams()
@@ -30,6 +31,7 @@ export default function Flashcard(){
             const colRef = collection(doc(collection(db, 'users'), user.id), search)
             const docs = await getDocs(colRef)
             const flashcards = []
+            setCollectionName(colRef.id || 'Flashcards')
 
             docs.forEach((doc) => {
                 flashcards.push({id: doc.id, ...doc.data()})
@@ -75,7 +77,7 @@ export default function Flashcard(){
                 </Toolbar>
             </AppBar>
             <Typography variant="h4" sx={{ color: 'white', my: 4, textAlign: 'center'}}>
-                    Flashcards
+                    {collectionName}
             </Typography>
             <Grid container spacing={3} sx={{mt:4}}>
     

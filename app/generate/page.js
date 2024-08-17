@@ -139,8 +139,8 @@ export default function Generate() {
                 <Typography variant="h4" sx={{ mb: 4, color: 'white' }}>
                     Generate Flashcards
                 </Typography>
-                <Paper sx={{ p: 4, width: '100%' }}>
-                    <TextField
+                {/* <Paper sx={{ p: 4, width: '100%' }}> */}
+                    {/* <TextField
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         label="Enter text"
@@ -151,22 +151,21 @@ export default function Generate() {
                         sx={{
                             mb: 2,
                         }}
-                    />
+                    /> */}
                     <Button
                         variant="contained"
                         color="primary"
                         onClick={handleSubmit}
-                        fullWidth
                         sx={{backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',},}}
                     >
-                        Submit
+                        Generate
                     </Button>
-                </Paper>
+                {/* </Paper> */}
             </Box>
 
             {flashcards.length > 0 && (
                 <Box sx={{ mt: 4 }}>
-                    <Typography variant="h5">
+                    <Typography variant="h5" sx={{ color:"white", my: 4, textAlign:"center" }}>
                         Flashcards Preview
                     </Typography>
                     <Grid container spacing={3}>
