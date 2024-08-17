@@ -34,7 +34,7 @@ export default function SignUpPage() {
                 alignItems="center"
                 justifyContents="center"
             >
-                <Typography color="#FFFFFF" variant="h4">
+                <Typography color="#FFFFFF" variant="h4" sx={{color: "#FCD19C", my: 4}}>
                     Sign In
                 </Typography>
                 <SignIn />
