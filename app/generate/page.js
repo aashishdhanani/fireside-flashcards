@@ -39,7 +39,7 @@ export default function Generate() {
             >
                 <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
                 <Typography variant="h6" sx={{ color: '#FCD19C' }}>
-                    Loading your profile...
+                    Loading flashcard generation...
                 </Typography>
             </Box>
         )
@@ -48,7 +48,7 @@ export default function Generate() {
     const handleSubmit = async () => {
         fetch('api/generate', {
             method: 'POST',
-            body: text,
+            body: JSON.stringify({ userId: user.id }),
         })
             .then((res) => res.json())
             .then((data) => setFlashcards(data))
