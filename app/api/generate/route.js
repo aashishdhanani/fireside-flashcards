@@ -4,26 +4,16 @@ import { db } from '../../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 const systemPrompt = `
-You are a flashcard creator. Your task is to create a set of flashcards to help the user prepare for an interview. Each flashcard should have a clear question or prompt on the front, and a concise, accurate answer on the back. Use the user's background details to generate interview questions and help structure the answers based on their experience.
+Ceate flashcards to help the user prepare for interviews. 
+Each flashcard should have a clear generic behavioral interview question, and a concise, accurate answer on the back based on the user's given background ONLY and nothing else. 
+Use the user's background ONLY to structure the answers.
 
-Guidelines:
 
-Question/Prompt Format:
-
-- Ask questions that are commonly asked in interviews.
 - Tailor questions to the user's experience, skills, and the job role they are targeting.
 - For behavior-based questions, use "Describe a time when..." or "How did you handle...?"
 - For technical questions, use "Explain how you would..." or "What is your experience with...?"
-
-Answer Format:
-
-- Provide a concise, direct response based on the user's background.
-- Highlight the user's achievements, skills, and relevant experience.
 - Structure answers using the STAR method (Situation, Task, Action, Result) for behavioral questions.
-
-Subject Coverage:
-
-- Ensure the questions cover key areas relevant to the user's background and the job role.
+- Ensure questions are relevant to the user's background.
 - Include questions that explore the user's technical skills, problem-solving abilities, and cultural fit.
 
 Flashcard Set Requirements:
@@ -50,14 +40,14 @@ export async function POST(req) {
     try {
         const { userId } = await req.json();
         
-        console.log('req')
-        console.log(req)
+        console.log('req');
+        console.log(req);
         if (!userId) {
             return NextResponse.json({ error: 'User ID is missing' }, { status: 400 });
         }
 
         // Fetch user profile data from Firestore
-        const userRef = doc(db, 'users', userId); // Adjust the collection and document path as necessary
+        const userRef = doc(db, 'users', userId);
         const userSnap = await getDoc(userRef);
 
         if (!userSnap.exists()) {
@@ -65,17 +55,25 @@ export async function POST(req) {
         }
 
         const userData = userSnap.data();
-
         const { experiences, education, careerGoals, skills, additionalInfo } = userData;
+
+        const experiencesStr = typeof experiences === 'string' ? experiences : JSON.stringify(experiences);
+        const educationStr = typeof education === 'string' ? education : JSON.stringify(education);
+        const careerGoalsStr = typeof careerGoals === 'string' ? careerGoals : JSON.stringify(careerGoals);
+        const skillsStr = typeof skills === 'string' ? skills : JSON.stringify(skills);
+        const additionalInfoStr = typeof additionalInfo === 'string' ? additionalInfo : JSON.stringify(additionalInfo);
+
 
         // Construct the background details
         const backgroundDetails = `
-            Experiences: ${experiences}
-            Education: Highest Education: ${education}, 
-            Career Goals: Goals: ${careerGoals}
-            Skills: Top Skills: ${skills},
-            Additional Info: ${additionalInfo}
+            Experiences: ${experiencesStr}. 
+            Education: Highest Education: ${educationStr}. 
+            Career Goals: Goals: ${careerGoalsStr}. 
+            Skills: Top Skills: ${skillsStr}. 
+            Additional Info: ${additionalInfoStr}.
         `;
+
+        
 
         const userPrompt = `
             Here is the user's background information: ${backgroundDetails}
