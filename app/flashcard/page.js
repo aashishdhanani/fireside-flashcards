@@ -4,15 +4,25 @@ import { useEffect, useState } from "react"
 import { collection, doc, getDoc, getDocs } from "firebase/firestore"
 import { db } from "@/firebase"
 import { useSearchParams } from "next/navigation"
-import { Container, Box, Typography, Paper, TextField, Button, Grid, CardActionArea, Card, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material'
+import { useRouter } from 'next/navigation'
+import { Container, Box, Typography, Paper, TextField, Button, Grid, CardActionArea, Card, CardContent, AppBar, Toolbar } from '@mui/material'
+import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
+import Link from 'next/link'
 
 export default function Flashcard(){
     const {isLoaded, isSignedIn, user} = useUser()
     const [flashcards, setFlashcards] = useState([])
     const [flipped, setFlipped] = useState([])
+    const router = useRouter()
 
     const searchParams = useSearchParams()
     const search = searchParams.get('id')
+
+    useEffect(() => {
+        if (isLoaded && !isSignedIn) {
+            router.push('/sign-in') // Redirect to sign-in page if not signed in
+        }
+    }, [isLoaded, isSignedIn, router])
 
     useEffect(() => {
         async function getFlashcard() {
@@ -42,6 +52,31 @@ export default function Flashcard(){
 
     return (
         <Container maxWidth="100vw" sx={{ backgroundColor: "#2E2E2E", minHeight: '100vh', p: 2 }}>
+            <AppBar position="static" sx={{ backgroundColor: '#2E2E2E'}}>
+                <Toolbar>
+                <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
+                    <Typography 
+                    variant="h6"  
+                    style={{ flexGrow: 1, textDecoration: 'none', color: '#FCD19C', cursor: 'pointer' }}
+                    >
+                    Fireside Flashcards
+                    </Typography>
+                </Link>
+                <Button color="inherit" href="/profile">Profile</Button>
+                <Button color="inherit" href="/generate">Generate</Button>
+                <Button color="inherit" href="/flashcards">Flashcards</Button>
+                <SignedOut>
+                    <Button color="inherit" href="/sign-in">Login</Button>
+                    <Button color="inherit" href="/sign-up">Sign Up</Button>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
+                </Toolbar>
+            </AppBar>
+            <Typography variant="h4" sx={{ color: 'white', my: 4, textAlign: 'center'}}>
+                    Flashcards
+            </Typography>
             <Grid container spacing={3} sx={{mt:4}}>
     
                             {flashcards.map((flashcard, index) => (

@@ -88,6 +88,9 @@ export default function Flashcards() {
                 </SignedIn>
                 </Toolbar>
             </AppBar>
+            <Typography variant="h4" sx={{ color: 'white', my: 4, textAlign: 'center'}}>
+                    Flashcard Collection
+            </Typography>
             <Grid container spacing={3} sx={{mt: 4}}>
                 {flashcards.map((flashcard, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index}>
