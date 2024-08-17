@@ -5,6 +5,7 @@ import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
 import { Container, AppBar, Toolbar, Typography, Button, Box, Grid } from "@mui/material";
 import Head from 'next/head'
 import Link from 'next/link'
+import Features from './features/features';
 
 export default function Home() {
 
@@ -81,32 +82,7 @@ export default function Home() {
         </Button>
       </Box>
       <Box sx = {{textAlign: 'center', my: 6, color: 'white'}}>
-        <Typography variant="h4" sx={{ color: '#FCD19C' }} components="h2" gutterBottom>
-          Features
-        </Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" gutterBottom>Easy Text Input</Typography>
-            <Typography>
-              {' '}
-              Simply input your text and let our software do the rest. Creating flashcards has never been easier.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" gutterBottom>Smart Flashcards</Typography>
-            <Typography>
-              {' '}
-              Our AI intelligently breaks down your text into concise flashcards.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" gutterBottom>Accessible Anywhere</Typography>
-            <Typography>
-              {' '}
-              Easy access the flashcards on the go.
-            </Typography>
-          </Grid>
-        </Grid>
+        <Features />
       </Box>
 
       {/* Pricing Section */}
