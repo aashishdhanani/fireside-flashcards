@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
-import { Box, Button, Container, TextField, Typography, Paper, Grid, Fade, AppBar, Toolbar } from "@mui/material";
+import { Box, Button, Container, TextField, Typography, Paper, Grid, Fade, AppBar, Toolbar, CircularProgress, FormControlLabel, Checkbox } from "@mui/material";
 import { useState, useEffect } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
@@ -13,7 +13,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { FormControlLabel, Checkbox } from '@mui/material';
 import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
 import { db } from "@/firebase";
 import { doc, collection, setDoc, getDoc } from "firebase/firestore";
@@ -81,7 +80,25 @@ export default function Profile() {
     };
 
     if (!isLoaded || !isSignedIn) {
-        return <Typography>Loading...</Typography> // Display loading or message until user status is determined
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '100vh',
+                    backgroundColor: '#2E2E2E',
+                    color: '#FCD19C',
+                    textAlign: 'center'
+                }}
+            >
+                <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
+                <Typography variant="h6" sx={{ color: '#FCD19C' }}>
+                    Loading your profile...
+                </Typography>
+            </Box>
+        )
     }
 
     const handleCheckboxChange = (event) => {
@@ -138,12 +155,49 @@ export default function Profile() {
                 skills,
                 additionalInfo
             }, { merge: true });
-            alert('Profile updated successfully!');
+            
         } catch (error) {
             console.error('Error updating profile:', error);
             alert('Error updating profile.');
         }
     };
+
+    const submitData = async () => {
+        if (!user || !user.id) return;
+    
+        // Create an object with profile data and userId
+        const profileData = {
+            userId: user.id,
+            experiences,
+            education,
+            careerGoals,
+            skills,
+            additionalInfo
+        };
+    
+        try {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(profileData), // Send all profile data and userId
+            });
+    
+            if (!response.ok) {
+                console.error('Failed to fetch data');
+                alert('Error submitting flashcards.');
+                return;
+            }
+    
+            const data = await response.json();
+            console.log(data); // Process the response data as needed
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error.');
+        }
+    };
+    
 
     return (
         <Container maxWidth="100%" sx={{ backgroundColor: '#2E2E2E', minHeight: '100vh', p: 0 }}>
@@ -159,6 +213,7 @@ export default function Profile() {
                 </Link>
                 <Button color="inherit" href="/profile">Profile</Button>
                 <Button color="inherit" href="/generate">Generate</Button>
+                <Button color="inherit" href="/flashcards">Flashcards</Button>
                 <SignedOut>
                     <Button color="inherit" href="/sign-in">Login</Button>
                     <Button color="inherit" href="/sign-up">Sign Up</Button>
@@ -426,6 +481,7 @@ export default function Profile() {
                             }}
                             onClick={() => {
                                 saveProfile();
+                                submitData();
                                 alert('Profile updated!');
                             }}
                         >
