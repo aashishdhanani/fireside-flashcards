@@ -15,15 +15,44 @@ export default function Generate() {
     const [text, setText] = useState('')
     const [name, setName] = useState('')
     const [open, setOpen] = useState(false)
+    const [paidUser, setPaidUser] = useState(false);
+    const [loading, setLoading] = useState(true);
     const router = useRouter()
+    const [isAuthorized, setIsAuthorized] = useState(false)
 
     useEffect(() => {
-        if (isLoaded && !isSignedIn) {
-            router.push('/sign-in') // Redirect to sign-in page if not signed in
-        }
-    }, [isLoaded, isSignedIn, router])
+        if (isLoaded) {
+            if (!isSignedIn) {
+                // Redirect immediately if not signed in
+                router.push('/sign-in')
+                return
+            }
 
-    if (!isLoaded || !isSignedIn) {
+            const checkPaidStatus = async () => {
+                try {
+                    const userDocRef = doc(db, 'users', user.id);
+                    const docSnap = await getDoc(userDocRef);
+
+                    if (docSnap.exists()) {
+                        const userData = docSnap.data();
+                        if (userData.paidUser) {
+                            setIsAuthorized(true); // Allow page to render
+                        } else {
+                            router.push('/'); // Redirect if not a paid user
+                        }
+                    } else {
+                        router.push('/'); // Redirect if user document doesn't exist
+                    }
+                } catch (error) {
+                    console.error("Error checking user status:", error);
+                }
+            };
+
+            checkPaidStatus();
+        }
+    }, [isLoaded, isSignedIn, user, router]);
+
+    if (!isAuthorized) {
         return (
             <Box
                 sx={{
