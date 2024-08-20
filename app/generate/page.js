@@ -31,6 +31,7 @@ export default function Generate() {
 
             const checkPaidStatus = async () => {
                 try {
+                    setLoading(true); // Start loading
                     const userDocRef = doc(db, 'users', user.id);
                     const docSnap = await getDoc(userDocRef);
 
@@ -39,13 +40,17 @@ export default function Generate() {
                         if (userData.paidUser) {
                             setIsAuthorized(true); // Allow page to render
                         } else {
-                            router.push('/'); // Redirect if not a paid user
+                            setIsAuthorized(false); // Render the message for non-pro users
+                            // router.push('/'); // Redirect if not a paid user
                         }
                     } else {
-                        router.push('/'); // Redirect if user document doesn't exist
+                        setIsAuthorized(false); // Render the message if user document doesn't exist
+                        // router.push('/'); // Redirect if user document doesn't exist
                     }
                 } catch (error) {
                     console.error("Error checking user status:", error);
+                } finally {
+                    setLoading(false); // End loading
                 }
             };
 
@@ -53,7 +58,7 @@ export default function Generate() {
         }
     }, [isLoaded, isSignedIn, user, router]);
 
-    if (!isAuthorized) {
+    if (loading) {
         return (
             <Box
                 sx={{
@@ -185,28 +190,33 @@ export default function Generate() {
                 <Typography variant="h4" sx={{ mb: 4, color: 'white' }}>
                     Generate Flashcards
                 </Typography>
-                {/* <Paper sx={{ p: 4, width: '100%' }}> */}
-                    {/* <TextField
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        label="Enter text"
-                        fullWidth
-                        multiline
-                        rows={4}
-                        variant="outlined"
-                        sx={{
-                            mb: 2,
-                        }}
-                    /> */}
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        sx={{backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',},}}
-                    >
-                        Generate
-                    </Button>
-                {/* </Paper> */}
+                {!isAuthorized && (
+                    <>
+                        <Typography variant="h6" sx={{ color: 'red', mt: 2 }}>
+                            This may only be accessed by Pro Plan Members or after a limited number of accesses.
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => router.push('/payment')}
+                            sx={{ backgroundColor: '#FCD19C', color: '#000', '&:hover': { backgroundColor: '#e0a44d' }, mt: 2 }}
+                        >
+                            Upgrade to Pro Plan
+                        </Button>
+                    </>
+                )}
+                {isAuthorized && (
+                    <>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleSubmit}
+                            sx={{ backgroundColor: '#FCD19C', color: '#000', '&:hover': { backgroundColor: '#e0a44d' } }}
+                        >
+                            Generate
+                        </Button>
+                    </>
+                )}
             </Box>
 
             {generating && (  // Show loading spinner while generating flashcards
