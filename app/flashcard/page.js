@@ -125,7 +125,7 @@ export default function Flashcard(){
                                                             </Typography>
                                                         </div>
                                                         <div>
-                                                            <Typography variant="h5" component = "div">
+                                                            <Typography variant="h7" component = "div">
                                                                 {flashcard.back}
                                                             </Typography>
                                                         </div>
