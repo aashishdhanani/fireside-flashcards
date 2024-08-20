@@ -19,24 +19,24 @@ const items = [
     title: 'Easy Text Input',
     description:
       'Simply input your text and let our software do the rest. Creating flashcards has never been easier.',
-    imageLight: 'url("/app/img/red_flame_gradient_logo_3.png")',
-    imageDark: 'url("/app/img/red_flame_gradient_logo_3.png")',
+    imageLight: 'url("red_flame_gradient_logo_3.png")',
+    imageDark: 'url("red_flame_gradient_logo_3.png")',
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
     title: 'Smart Flashcards',
     description:
       'Our AI intelligently breaks down your text into concise flashcards.',
-    imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
+    imageLight: 'url("aiAvatarChatbot.png")',
+    imageDark: 'url("aiAvatarChatbot.png")',
   },
   {
     icon: <DevicesRoundedIcon />,
     title: 'Accessible Anywhere',
     description:
       'Easy access the flashcards on the go.',
-    imageLight: 'url("/static/images/templates/templates-images/devices-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/devices-dark.png")',
+    imageLight: 'url("aiAvatarChatbot.png")',
+    imageDark: 'url("aiAvatarChatbot.png")',
   },
 ];
 
@@ -108,8 +108,9 @@ export default function Features() {
                   theme.palette.mode === 'light'
                     ? items[selectedItemIndex].imageLight
                     : items[selectedItemIndex].imageDark,
-                backgroundSize: 'cover',
+                backgroundSize: 'contain',
                 backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
                 minHeight: 280,
               }}
             />
@@ -257,6 +258,8 @@ export default function Features() {
                 width: 420,
                 height: 500,
                 backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
                 backgroundImage: (theme) =>
                   theme.palette.mode === 'light'
                     ? items[selectedItemIndex].imageLight
