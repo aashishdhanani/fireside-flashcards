@@ -179,7 +179,7 @@ export default function Generate() {
                             variant="contained"
                             color="secondary"
                             onClick={() => router.push('/payment')}
-                            sx={{ mt: 2 }}
+                            sx={{ backgroundColor: '#FCD19C', color: '#000', '&:hover': { backgroundColor: '#e0a44d' }, mt: 2 }}
                         >
                             Upgrade to Pro Plan
                         </Button>
