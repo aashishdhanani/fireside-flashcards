@@ -75,7 +75,7 @@ export default function Home() {
         </Typography>
         <Typography variant="h5" sx={{ color: 'white' }} gutterBottom>
           {' '}
-          The easiest way to make flashcards from your text
+          The easiest way to make flashcards from your CV
         </Typography>
         <Button variant="contained" color="primary" sx = {{mt:2, backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',},}} href="/profile">
           Get Started

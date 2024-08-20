@@ -23,12 +23,15 @@ export default function Generate() {
 
     useEffect(() => {
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         if (isLoaded && !isSignedIn) {
             router.push('/sign-in') // Redirect to sign-in page if not signed in
 =======
 =======
 >>>>>>> 17286dfd856e5ba18ecf9c3a2a04ff3f95529b2a
+=======
+>>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
         if (isLoaded) {
             if (!isSignedIn) {
                 // Redirect immediately if not signed in
@@ -36,6 +39,9 @@ export default function Generate() {
                 return
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
 
             const checkPaidStatus = async () => {
                 try {
@@ -59,6 +65,7 @@ export default function Generate() {
             };
 
             checkPaidStatus();
+<<<<<<< HEAD
 >>>>>>> Stashed changes
         }
     }, [isLoaded, isSignedIn, router])
@@ -148,6 +155,13 @@ export default function Generate() {
     //         .then((res) => res.json())
     //         .then((data) => setFlashcards(data))
     // }
+=======
+        }
+    }, [isLoaded, isSignedIn, router])
+
+  
+    
+>>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
 
     const handleSubmit = async () => {
         setGenerating(true);  // Start loading spinner when generating flashcards
@@ -250,6 +264,7 @@ export default function Generate() {
                 <Typography variant="h4" sx={{ mb: 4, color: 'white' }}>
                     Generate Flashcards
                 </Typography>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -373,6 +388,8 @@ export default function Generate() {
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
     
                 {!isAuthorized && (
                     <>
@@ -386,6 +403,7 @@ export default function Generate() {
                             sx={{ backgroundColor: '#FCD19C', color: '#000', '&:hover': { backgroundColor: '#e0a44d' }, mt: 2 }}
                         >
                             Upgrade to Pro Plan
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 >>>>>>> Stashed changes
@@ -393,6 +411,8 @@ export default function Generate() {
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
                         </Button>
                     </>
                 )}
