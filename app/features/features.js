@@ -101,6 +101,7 @@ export default function Features() {
             sx={{
               display: { xs: 'auto', sm: 'none' },
               mt: 4,
+              backgroundColor: '#333',
             }}
           >
             <Box
@@ -113,6 +114,7 @@ export default function Features() {
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 minHeight: 280,
+                backgroundColor: '#333',
               }}
             />
             <Box sx={{ px: 2, pb: 2 }}>
@@ -253,6 +255,7 @@ export default function Features() {
               width: '100%',
               display: { xs: 'none', sm: 'flex' },
               pointerEvents: 'none',
+              backgroundColor: '#333',
             }}
           >
             <Box
@@ -263,6 +266,7 @@ export default function Features() {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
+                backgroundColor: '#333',
                 backgroundImage: (theme) =>
                   theme.palette.mode === 'light'
                     ? items[selectedItemIndex].imageLight
