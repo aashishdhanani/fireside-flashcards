@@ -45,10 +45,10 @@ export default function Generate() {
                         
                         if (userData.paidUser) {
                             setIsAuthorized(true); // Allow page to render
-                        } else if (featureAccessCount < 3) {
-                            setIsAuthorized(true); // Allow page to render for limited accesses
-                            // Increment access count
-                            await setDoc(userDocRef, { featureAccessCount: featureAccessCount + 1 }, { merge: true });
+                        // } else if (featureAccessCount < 3) {
+                        //     setIsAuthorized(true); // Allow page to render for limited accesses
+                        //     // Increment access count
+                        //     await setDoc(userDocRef, { featureAccessCount: featureAccessCount + 1 }, { merge: true });
                         } else {
                             setIsAuthorized(false); // Render the message for non-pro users
                             router.push('/payment'); // Redirect to payment page
@@ -66,8 +66,28 @@ export default function Generate() {
         }
     }, [isLoaded, isSignedIn, user, router]);
     
+    if (!isAuthorized) {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '100vh',
+                    backgroundColor: '#2E2E2E',
+                    color: '#FCD19C',
+                    textAlign: 'center'
+                }}
+            >
+                <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
+                <Typography variant="h6" sx={{ color: '#FCD19C' }}>
+                    Loading flashcard generation...
+                </Typography>
+            </Box>
+        )
+    }
     
-
     const handleSubmit = async () => {
         setGenerating(true);  // Start loading spinner when generating flashcards
         try {
