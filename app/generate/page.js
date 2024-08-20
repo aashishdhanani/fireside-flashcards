@@ -18,10 +18,6 @@ export default function Generate() {
     const router = useRouter()
 
     useEffect(() => {
-<<<<<<< Updated upstream
-        if (isLoaded && !isSignedIn) {
-            router.push('/sign-in') // Redirect to sign-in page if not signed in
-=======
         if (isLoaded) {
             if (!isSignedIn) {
                 // Redirect immediately if not signed in
@@ -51,37 +47,11 @@ export default function Generate() {
             };
 
             checkPaidStatus();
->>>>>>> Stashed changes
         }
     }, [isLoaded, isSignedIn, router])
 
-<<<<<<< Updated upstream
-    if (!isLoaded || !isSignedIn) {
-=======
-    `
-    if (!isAuthorized) {
->>>>>>> Stashed changes
-        return (
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: '100vh',
-                    backgroundColor: '#2E2E2E',
-                    color: '#FCD19C',
-                    textAlign: 'center'
-                }}
-            >
-                <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
-                <Typography variant="h6" sx={{ color: '#FCD19C' }}>
-                    Loading flashcard generation...
-                </Typography>
-            </Box>
-        )
-    }
-        `
+  
+    
 
     const handleSubmit = async () => {
         fetch('api/generate', {
@@ -177,100 +147,6 @@ export default function Generate() {
                 <Typography variant="h4" sx={{ mb: 4, color: 'white' }}>
                     Generate Flashcards
                 </Typography>
-<<<<<<< Updated upstream
-                <Paper sx={{ p: 4, width: '100%' }}>
-                    <TextField
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        label="Enter text"
-                        fullWidth
-                        multiline
-                        rows={4}
-                        variant="outlined"
-                        sx={{
-                            mb: 2,
-                        }}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        fullWidth
-                        sx={{backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',},}}
-                    >
-                        Submit
-                    </Button>
-                </Paper>
-            </Box>
-
-            {flashcards.length > 0 && (
-                <Box sx={{ mt: 4 }}>
-                    <Typography variant="h5">
-                        Flashcards Preview
-                    </Typography>
-                    <Grid container spacing={3}>
-                        {flashcards.map((flashcard, index) => (
-                            <Grid item xs={12} sm={6} md={4} key={index}>
-                                <Card>
-                                    <CardActionArea
-                                        onClick={() => {
-                                            handleCardClick(index)
-                                        }}
-                                    >
-                                        <CardContent>
-                                            <Box
-                                                sx={{
-                                                    perspective: '1000px',
-                                                    '& > div': {
-                                                        transition: 'transform 0.6s',
-                                                        transformStyle: 'preserve-3d',
-                                                        position: 'relative',
-                                                        width: '100%',
-                                                        height: '300px', // Increased height
-                                                        maxWidth: '800px', // Increased max width
-                                                        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
-                                                        transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                                                        margin: 'auto', // Center the card horizontally
-                                                    },
-                                                    '& > div > div': {
-                                                        position: 'absolute',
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        backfaceVisibility: 'hidden',
-                                                        display: 'flex',
-                                                        justifyContent: 'center',
-                                                        alignItems: 'center',
-                                                        padding: 2,
-                                                        boxSizing: 'border-box',
-                                                    },
-                                                    '& > div > div:nth-of-type(2)': {
-                                                        transform: 'rotateY(180deg)',
-                                                    },
-                                                }}
-                                            >
-                                                <div>
-                                                    <div>
-                                                        <Typography variant="h5" component="div" sx={{ textAlign: 'center' }}>
-                                                            {flashcard.front}
-                                                        </Typography>
-                                                    </div>
-                                                    <div>
-                                                        <Typography variant="h8" component="div" sx={{ textAlign: 'center' }}>
-                                                            {flashcard.back}
-                                                        </Typography>
-                                                    </div>
-                                                </div>
-                                            </Box>
-                                        </CardContent>
-                                    </CardActionArea>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
-                    <Box sx={{ mt: 4, display: 'flex', justifyContent: "center" }}>
-                        <Button variant='contained' color='secondary' onClick={handleOpen}>
-                            Save
-=======
     
                 {!isAuthorized && (
                     <>
@@ -284,7 +160,6 @@ export default function Generate() {
                             sx={{ backgroundColor: '#FCD19C', color: '#000', '&:hover': { backgroundColor: '#e0a44d' }, mt: 2 }}
                         >
                             Upgrade to Pro Plan
->>>>>>> Stashed changes
                         </Button>
                     </>
                 )}
