@@ -37,8 +37,8 @@ export default function Generate() {
 
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
-                        const featureAccessCount = userData.featureAccessCount || 0;
-                        if (userData.paidUser || featureAccessCount < 3) {
+                        
+                        if (userData.paidUser) {
                             setIsAuthorized(true); // Allow page to render
                         } else {
                             setIsAuthorized(false); // Render the message for non-pro users
