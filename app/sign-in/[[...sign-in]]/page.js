@@ -4,8 +4,8 @@ import Link from 'next/link'
 
 export default function SignUpPage() {
     return (
-        <Container maxWidth="100vw" sx={{ backgroundColor: '#2E2E2E', minHeight: '100vh', p: 2 }}>
-            <AppBar position="static" sx={{ backgroundColor: '#2E2E2E'}}>
+        <Container maxWidth="100vw" sx={{ backgroundColor: "#2E2E2E", minHeight: '100vh', p: 2 }}>
+            <AppBar position="static" sx={{backgroundColor: "#2E2E2E"}}>
                 <Toolbar>
                     <Link href="/" passHref style={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}> 
                         <Typography 
@@ -34,7 +34,7 @@ export default function SignUpPage() {
                 alignItems="center"
                 justifyContents="center"
             >
-                <Typography variant="h4" sx={{ my: 4, color: '#FCD19C' }}>
+                <Typography color="#FFFFFF" variant="h4" sx={{color: "#FCD19C", my: 4}}>
                     Sign In
                 </Typography>
                 <SignIn />

@@ -5,6 +5,7 @@ import {SignedIn, SignedOut, UserButton} from '@clerk/nextjs'
 import { Container, AppBar, Toolbar, Typography, Button, Box, Grid } from "@mui/material";
 import Head from 'next/head'
 import Link from 'next/link'
+import Features from './features/features';
 
 export default function Home() {
 
@@ -81,32 +82,7 @@ export default function Home() {
         </Button>
       </Box>
       <Box sx = {{textAlign: 'center', my: 6, color: 'white'}}>
-        <Typography variant="h4" sx={{ color: '#FCD19C' }} components="h2" gutterBottom>
-          Features
-        </Typography>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" gutterBottom>Easy Text Input</Typography>
-            <Typography>
-              {' '}
-              Simply input your text and let our software do the rest. Creating flashcards has never been easier.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" gutterBottom>Smart Flashcards</Typography>
-            <Typography>
-              {' '}
-              Our AI intelligently breaks down your text into concise flashcards.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" gutterBottom>Accessible Anywhere</Typography>
-            <Typography>
-              {' '}
-              Easy access the flashcards on the go.
-            </Typography>
-          </Grid>
-        </Grid>
+        <Features />
       </Box>
 
       {/* Pricing Section */}
@@ -165,6 +141,63 @@ export default function Home() {
             </Box>
           </Grid>
         </Grid>
+      </Box>
+
+      {/* Footer Section */}
+      <Box 
+        component="footer"
+        sx={{
+          backgroundColor: '#1c1c1c',
+          color: 'white',
+          py: 4,
+          mt: 'auto',
+        }}
+      >
+        <Container maxWidth="md">
+          <Grid container spacing={4} justifyContent="space-between" alignItem="center">
+            <Grid item xs={12} sm={4} textAlign="center">
+              <Typography variant="h6">Fireside Flashcards</Typography>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                © {new Date().getFullYear()} FiresideAI. All rights reserved.
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={4} textAlign="center">
+              <Typography variant="h6">Links</Typography>
+              <Box sx={{ 
+                      mt: 1,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      gap: 2,
+                    }}>
+                <Link href="/" passHref>
+                  <Typography variant="body2" color="#FCD19C">Home</Typography>
+                </Link>
+                <br />
+                <Link href="/profile" passHref>
+                  <Typography variant="body2" color="#FCD19C">Profile</Typography>
+                </Link>
+                <br />
+                <Link href="/generate" passHref>
+                  <Typography variant="body2" color="#FCD19C">Generate</Typography>
+                </Link>
+                <br />
+                <Link href="/flashcards" passHref>
+                  <Typography variant="body2" color="#FCD19C">Flashcards</Typography>
+                </Link>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={4} textAlign="center">
+              <Typography variant="h6">Contact</Typography>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                Email: <Link href="mailto:firesideaiofficial@gmail.com" color="#FCD19C">firesideaiofficial@gmail.com</Link>
+              </Typography>
+              {/* <Typography variant="body2">
+                <Link href="https://twitter.com/firesideflashcards" color="inherit" target="_blank" rel="noopener noreferrer">Twitter</Link> | 
+                <Link href="https://github.com/firesideflashcards" color="inherit" target="_blank" rel="noopener noreferrer">GitHub</Link>
+              </Typography> */}
+            </Grid>
+          </Grid>
+        </Container>
       </Box>
     </Container>
   );

@@ -15,19 +15,27 @@ export default function Generate() {
     const [text, setText] = useState('')
     const [name, setName] = useState('')
     const [open, setOpen] = useState(false)
+    const [paidUser, setPaidUser] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [generating, setGenerating] = useState(false);
     const router = useRouter()
+    const [isAuthorized, setIsAuthorized] = useState(false)
 
     useEffect(() => {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         if (isLoaded && !isSignedIn) {
             router.push('/sign-in') // Redirect to sign-in page if not signed in
 =======
+=======
+>>>>>>> 17286dfd856e5ba18ecf9c3a2a04ff3f95529b2a
         if (isLoaded) {
             if (!isSignedIn) {
                 // Redirect immediately if not signed in
                 router.push('/sign-in')
                 return
             }
+<<<<<<< HEAD
 
             const checkPaidStatus = async () => {
                 try {
@@ -67,6 +75,34 @@ export default function Generate() {
     `
     if (!isAuthorized) {
 >>>>>>> Stashed changes
+=======
+
+            const checkPaidStatus = async () => {
+                try {
+                    const userDocRef = doc(db, 'users', user.id);
+                    const docSnap = await getDoc(userDocRef);
+
+                    if (docSnap.exists()) {
+                        const userData = docSnap.data();
+                        if (userData.paidUser) {
+                            setIsAuthorized(true); // Allow page to render
+                        } else {
+                            router.push('/'); // Redirect if not a paid user
+                        }
+                    } else {
+                        router.push('/'); // Redirect if user document doesn't exist
+                    }
+                } catch (error) {
+                    console.error("Error checking user status:", error);
+                }
+            };
+
+            checkPaidStatus();
+        }
+    }, [isLoaded, isSignedIn, user, router]);
+
+    if (!isAuthorized) {
+>>>>>>> 17286dfd856e5ba18ecf9c3a2a04ff3f95529b2a
         return (
             <Box
                 sx={{
@@ -82,7 +118,7 @@ export default function Generate() {
             >
                 <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
                 <Typography variant="h6" sx={{ color: '#FCD19C' }}>
-                    Loading your profile...
+                    Loading flashcard generation...
                 </Typography>
             </Box>
         )
@@ -104,13 +140,29 @@ export default function Generate() {
     // }
 >>>>>>> Stashed changes
 
+    // const handleSubmit = async () => {
+    //     fetch('api/generate', {
+    //         method: 'POST',
+    //         body: JSON.stringify({ userId: user.id }),
+    //     })
+    //         .then((res) => res.json())
+    //         .then((data) => setFlashcards(data))
+    // }
+
     const handleSubmit = async () => {
-        fetch('api/generate', {
-            method: 'POST',
-            body: text,
-        })
-            .then((res) => res.json())
-            .then((data) => setFlashcards(data))
+        setGenerating(true);  // Start loading spinner when generating flashcards
+        try {
+            const res = await fetch('api/generate', {
+                method: 'POST',
+                body: JSON.stringify({ userId: user.id }),
+            });
+            const data = await res.json();
+            setFlashcards(data);
+        } catch (error) {
+            console.error("Error generating flashcards:", error);
+        } finally {
+            setGenerating(false);  // Stop loading spinner once flashcards are generated
+        }
     }
 
     const handleCardClick = (id) => {
@@ -198,11 +250,16 @@ export default function Generate() {
                 <Typography variant="h4" sx={{ mb: 4, color: 'white' }}>
                     Generate Flashcards
                 </Typography>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                 <Paper sx={{ p: 4, width: '100%' }}>
                     <TextField
+=======
+                {/* <Paper sx={{ p: 4, width: '100%' }}> */}
+                    {/* <TextField
+>>>>>>> 17286dfd856e5ba18ecf9c3a2a04ff3f95529b2a
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         label="Enter text"
@@ -213,22 +270,40 @@ export default function Generate() {
                         sx={{
                             mb: 2,
                         }}
-                    />
+                    /> */}
                     <Button
                         variant="contained"
                         color="primary"
                         onClick={handleSubmit}
-                        fullWidth
                         sx={{backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',},}}
                     >
-                        Submit
+                        Generate
                     </Button>
-                </Paper>
+                {/* </Paper> */}
             </Box>
 
-            {flashcards.length > 0 && (
+            {generating && (  // Show loading spinner while generating flashcards
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        minHeight: '100px',
+                        backgroundColor: '#2E2E2E',
+                        color: '#FCD19C',
+                        textAlign: 'center'
+                    }}
+                >
+                    <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
+                    <Typography variant="h6" sx={{ ml: 2 }}>
+                        Generating flashcards...
+                    </Typography>
+                </Box>
+            )}
+
+            {flashcards.length > 0 && !generating && (
                 <Box sx={{ mt: 4 }}>
-                    <Typography variant="h5">
+                    <Typography variant="h5" sx={{ color:"white", my: 4, textAlign:"center" }}>
                         Flashcards Preview
                     </Typography>
                     <Grid container spacing={3}>

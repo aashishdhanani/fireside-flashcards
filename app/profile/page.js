@@ -155,12 +155,49 @@ export default function Profile() {
                 skills,
                 additionalInfo
             }, { merge: true });
-            alert('Profile updated successfully!');
+            
         } catch (error) {
             console.error('Error updating profile:', error);
             alert('Error updating profile.');
         }
     };
+
+    const submitData = async () => {
+        if (!user || !user.id) return;
+    
+        // Create an object with profile data and userId
+        const profileData = {
+            userId: user.id,
+            experiences,
+            education,
+            careerGoals,
+            skills,
+            additionalInfo
+        };
+    
+        try {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(profileData), // Send all profile data and userId
+            });
+    
+            if (!response.ok) {
+                console.error('Failed to fetch data');
+                alert('Error submitting flashcards.');
+                return;
+            }
+    
+            const data = await response.json();
+            console.log(data); // Process the response data as needed
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error.');
+        }
+    };
+    
 
     return (
         <Container maxWidth="100%" sx={{ backgroundColor: '#2E2E2E', minHeight: '100vh', p: 0 }}>
@@ -444,6 +481,7 @@ export default function Profile() {
                             }}
                             onClick={() => {
                                 saveProfile();
+                                submitData();
                                 alert('Profile updated!');
                             }}
                         >
