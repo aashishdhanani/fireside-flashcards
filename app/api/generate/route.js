@@ -3,8 +3,9 @@ import Groq from "groq-sdk";
 import { db } from '../../../firebase'; 
 import { doc, getDoc } from 'firebase/firestore';
 
-const systemPrompt = `
-Ceate flashcards to help the user prepare for interviews. 
+const systemPrompt = 
+`
+Create flashcards to help the user prepare for interviews. 
 Each flashcard should have a clear generic behavioral interview question, and a concise, accurate answer on the back based on the user's given background ONLY and nothing else. 
 Use the user's background ONLY to structure the answers.
 
@@ -39,14 +40,14 @@ export async function POST(req) {
     try {
         const { userId } = await req.json();
         
-        console.log('req');
-        console.log(req);
+        console.log('req')
+        console.log(req)
         if (!userId) {
             return NextResponse.json({ error: 'User ID is missing' }, { status: 400 });
         }
 
         // Fetch user profile data from Firestore
-        const userRef = doc(db, 'users', userId);
+        const userRef = doc(db, 'users', userId); // Adjust the collection and document path as necessary
         const userSnap = await getDoc(userRef);
 
         if (!userSnap.exists()) {
@@ -54,6 +55,7 @@ export async function POST(req) {
         }
 
         const userData = userSnap.data();
+
         const { experiences, education, careerGoals, skills, additionalInfo } = userData;
         console.log(userData)
 
@@ -91,23 +93,23 @@ export async function POST(req) {
             Additional Info: ${additionalInfo.otherInfo}
         `;
 
-        const experiencesStr = typeof experiences === 'string' ? experiences : JSON.stringify(experiences);
-        const educationStr = typeof education === 'string' ? education : JSON.stringify(education);
-        const careerGoalsStr = typeof careerGoals === 'string' ? careerGoals : JSON.stringify(careerGoals);
-        const skillsStr = typeof skills === 'string' ? skills : JSON.stringify(skills);
-        const additionalInfoStr = typeof additionalInfo === 'string' ? additionalInfo : JSON.stringify(additionalInfo);
-
-
         // Construct the background details
         const backgroundDetails = `
-            Experiences: ${experiencesStr}. 
-            Education: Highest Education: ${educationStr}. 
-            Career Goals: Goals: ${careerGoalsStr}. 
-            Skills: Top Skills: ${skillsStr}. 
-            Additional Info: ${additionalInfoStr}.
-        `;
+            Experiences: 
+            ${experienceDetails}
 
-        
+            Education: 
+            ${educationDetails}
+
+            Career Goals: 
+            ${careerGoalDetails}
+
+            Skills: 
+            ${skillDetails}
+
+            Additional Info: 
+            ${additionalInfoDetails}
+        `;
 
         const userPrompt = `
             Here is the user's background information: ${backgroundDetails}

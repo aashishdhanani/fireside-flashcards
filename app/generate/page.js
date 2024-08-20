@@ -20,148 +20,53 @@ export default function Generate() {
     const [generating, setGenerating] = useState(false);
     const router = useRouter()
     const [isAuthorized, setIsAuthorized] = useState(false)
-
+    
+    
     useEffect(() => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        if (isLoaded && !isSignedIn) {
-            router.push('/sign-in') // Redirect to sign-in page if not signed in
-=======
-=======
->>>>>>> 17286dfd856e5ba18ecf9c3a2a04ff3f95529b2a
-=======
->>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
         if (isLoaded) {
             if (!isSignedIn) {
                 // Redirect immediately if not signed in
-                router.push('/sign-in')
-                return
+                router.push('/sign-in');
+                return;
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
+            
 
             const checkPaidStatus = async () => {
                 try {
                     const userDocRef = doc(db, 'users', user.id);
                     const docSnap = await getDoc(userDocRef);
-
+                    
+                    
                     if (docSnap.exists()) {
                         const userData = docSnap.data();
+                        const featureAccessCount = userData.featureAccessCount || 0;
+
+                        console.log(`Feature access count: ${featureAccessCount}`);
+                        
                         if (userData.paidUser) {
                             setIsAuthorized(true); // Allow page to render
+                        } else if (featureAccessCount < 3) {
+                            setIsAuthorized(true); // Allow page to render for limited accesses
+                            // Increment access count
+                            await setDoc(userDocRef, { featureAccessCount: featureAccessCount + 1 }, { merge: true });
                         } else {
-                            setIsAuthorized(false);
+                            setIsAuthorized(false); // Render the message for non-pro users
+                            router.push('/payment'); // Redirect to payment page
                         }
                     } else {
-                        setIsAuthorized(false);
+                        setIsAuthorized(false); // Render the message if user document doesn't exist
                     }
                 } catch (error) {
                     console.error("Error checking user status:", error);
-                    setIsAuthorized(false);
+                    setIsAuthorized(false); // Render the message in case of an error
                 }
             };
-
-            checkPaidStatus();
-<<<<<<< HEAD
->>>>>>> Stashed changes
-        }
-    }, [isLoaded, isSignedIn, router])
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    if (!isLoaded || !isSignedIn) {
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-    `
-    if (!isAuthorized) {
->>>>>>> Stashed changes
-=======
-
-            const checkPaidStatus = async () => {
-                try {
-                    const userDocRef = doc(db, 'users', user.id);
-                    const docSnap = await getDoc(userDocRef);
-
-                    if (docSnap.exists()) {
-                        const userData = docSnap.data();
-                        if (userData.paidUser) {
-                            setIsAuthorized(true); // Allow page to render
-                        } else {
-                            router.push('/'); // Redirect if not a paid user
-                        }
-                    } else {
-                        router.push('/'); // Redirect if user document doesn't exist
-                    }
-                } catch (error) {
-                    console.error("Error checking user status:", error);
-                }
-            };
-
+    
             checkPaidStatus();
         }
     }, [isLoaded, isSignedIn, user, router]);
-
-    if (!isAuthorized) {
->>>>>>> 17286dfd856e5ba18ecf9c3a2a04ff3f95529b2a
-        return (
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: '100vh',
-                    backgroundColor: '#2E2E2E',
-                    color: '#FCD19C',
-                    textAlign: 'center'
-                }}
-            >
-                <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
-                <Typography variant="h6" sx={{ color: '#FCD19C' }}>
-                    Loading flashcard generation...
-                </Typography>
-            </Box>
-        )
-    }
-        `
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-
-    // const handleSubmit = async () => {
-    //     fetch('api/generate', {
-    //         method: 'POST',
-    //         body: JSON.stringify({ userId: user.id }),
-    //     })
-    //         .then((res) => res.json())
-    //         .then((data) => setFlashcards(data))
-    // }
->>>>>>> Stashed changes
-
-    // const handleSubmit = async () => {
-    //     fetch('api/generate', {
-    //         method: 'POST',
-    //         body: JSON.stringify({ userId: user.id }),
-    //     })
-    //         .then((res) => res.json())
-    //         .then((data) => setFlashcards(data))
-    // }
-=======
-        }
-    }, [isLoaded, isSignedIn, router])
-
-  
     
->>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
+    
 
     const handleSubmit = async () => {
         setGenerating(true);  // Start loading spinner when generating flashcards
@@ -264,155 +169,19 @@ export default function Generate() {
                 <Typography variant="h4" sx={{ mb: 4, color: 'white' }}>
                     Generate Flashcards
                 </Typography>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                <Paper sx={{ p: 4, width: '100%' }}>
-                    <TextField
-=======
-                {/* <Paper sx={{ p: 4, width: '100%' }}> */}
-                    {/* <TextField
->>>>>>> 17286dfd856e5ba18ecf9c3a2a04ff3f95529b2a
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        label="Enter text"
-                        fullWidth
-                        multiline
-                        rows={4}
-                        variant="outlined"
-                        sx={{
-                            mb: 2,
-                        }}
-                    /> */}
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        sx={{backgroundColor: '#FCD19C', color: '#000', '&:hover': {backgroundColor: '#e0a44d',},}}
-                    >
-                        Generate
-                    </Button>
-                {/* </Paper> */}
-            </Box>
-
-            {generating && (  // Show loading spinner while generating flashcards
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        minHeight: '100px',
-                        backgroundColor: '#2E2E2E',
-                        color: '#FCD19C',
-                        textAlign: 'center'
-                    }}
-                >
-                    <CircularProgress sx={{ color: '#FCD19C', mb: 2 }} />
-                    <Typography variant="h6" sx={{ ml: 2 }}>
-                        Generating flashcards...
-                    </Typography>
-                </Box>
-            )}
-
-            {flashcards.length > 0 && !generating && (
-                <Box sx={{ mt: 4 }}>
-                    <Typography variant="h5" sx={{ color:"white", my: 4, textAlign:"center" }}>
-                        Flashcards Preview
-                    </Typography>
-                    <Grid container spacing={3}>
-                        {flashcards.map((flashcard, index) => (
-                            <Grid item xs={12} sm={6} md={4} key={index}>
-                                <Card>
-                                    <CardActionArea
-                                        onClick={() => {
-                                            handleCardClick(index)
-                                        }}
-                                    >
-                                        <CardContent>
-                                            <Box
-                                                sx={{
-                                                    perspective: '1000px',
-                                                    '& > div': {
-                                                        transition: 'transform 0.6s',
-                                                        transformStyle: 'preserve-3d',
-                                                        position: 'relative',
-                                                        width: '100%',
-                                                        height: '300px', // Increased height
-                                                        maxWidth: '800px', // Increased max width
-                                                        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
-                                                        transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                                                        margin: 'auto', // Center the card horizontally
-                                                    },
-                                                    '& > div > div': {
-                                                        position: 'absolute',
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        backfaceVisibility: 'hidden',
-                                                        display: 'flex',
-                                                        justifyContent: 'center',
-                                                        alignItems: 'center',
-                                                        padding: 2,
-                                                        boxSizing: 'border-box',
-                                                    },
-                                                    '& > div > div:nth-of-type(2)': {
-                                                        transform: 'rotateY(180deg)',
-                                                    },
-                                                }}
-                                            >
-                                                <div>
-                                                    <div>
-                                                        <Typography variant="h5" component="div" sx={{ textAlign: 'center' }}>
-                                                            {flashcard.front}
-                                                        </Typography>
-                                                    </div>
-                                                    <div>
-                                                        <Typography variant="h8" component="div" sx={{ textAlign: 'center' }}>
-                                                            {flashcard.back}
-                                                        </Typography>
-                                                    </div>
-                                                </div>
-                                            </Box>
-                                        </CardContent>
-                                    </CardActionArea>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
-                    <Box sx={{ mt: 4, display: 'flex', justifyContent: "center" }}>
-                        <Button variant='contained' color='secondary' onClick={handleOpen}>
-                            Save
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
     
                 {!isAuthorized && (
                     <>
                         <Typography variant="h6" sx={{ color: 'red', mt: 2 }}>
-                            This may only be accessed by Pro Plan Members.
+                            This may only be accessed by Pro Plan Members or after a limited number of accesses.
                         </Typography>
                         <Button
                             variant="contained"
                             color="secondary"
                             onClick={() => router.push('/payment')}
-                            sx={{ backgroundColor: '#FCD19C', color: '#000', '&:hover': { backgroundColor: '#e0a44d' }, mt: 2 }}
+                            sx={{ mt: 2 }}
                         >
                             Upgrade to Pro Plan
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> e78fdd173375d2e0c4ea96c0c2933c61ce237952
                         </Button>
                     </>
                 )}
@@ -546,4 +315,4 @@ export default function Generate() {
             </Box>
         </Container>
     )
-}    
+}
