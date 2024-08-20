@@ -19,8 +19,8 @@ const items = [
     title: 'Easy Profile Update',
     description:
       'Simply edit user profile with your personal and professional background. The updated information will be available every time.',
-    imageLight: 'url("red_flame_gradient_logo_3.png")',
-    imageDark: 'url("red_flame_gradient_logo_3.png")',
+    imageLight: 'url("profile.jpg")',
+    imageDark: 'url("profile.jpg")',
     link: '/profile',
   },
   {
@@ -28,8 +28,8 @@ const items = [
     title: 'Smart Flashcards',
     description:
       'Our AI intelligently parses your profile and generates tailored questions and answers to common interview questions.',
-    imageLight: 'url("aiAvatarChatbot.png")',
-    imageDark: 'url("aiAvatarChatbot.png")',
+    imageLight: 'url("generate.jpg")',
+    imageDark: 'url("generate.jpg")',
     link: '/generate',
   },
   {
@@ -37,8 +37,8 @@ const items = [
     title: 'Accessible Anywhere',
     description:
       'Easy access the flashcards on the go. Flashcard collections can be saved and viewed later.',
-    imageLight: 'url("aiAvatarChatbot.png")',
-    imageDark: 'url("aiAvatarChatbot.png")',
+    imageLight: 'url("collection.jpg")',
+    imageDark: 'url("collection.jpg")',
     link: '/flashcards',
   },
 ];
@@ -65,7 +65,7 @@ export default function Features() {
               color="#FFFFFF"
               sx={{ mb: { xs: 2, sm: 4 }, mt: { xs: 1, sm: 2 } }}
             >
-              Here are some of our available features
+              Here are some of our available features to make your experience as seamless as possible.
             </Typography>
           </div>
           <Grid container item gap={1} sx={{ display: { xs: 'auto', sm: 'none' } }}>
@@ -109,7 +109,7 @@ export default function Features() {
                   theme.palette.mode === 'light'
                     ? items[selectedItemIndex].imageLight
                     : items[selectedItemIndex].imageDark,
-                backgroundSize: 'contain',
+                backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 minHeight: 280,
@@ -260,7 +260,7 @@ export default function Features() {
                 m: 'auto',
                 width: 420,
                 height: 500,
-                backgroundSize: 'contain',
+                backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundImage: (theme) =>
