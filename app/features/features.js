@@ -16,27 +16,30 @@ import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 const items = [
   {
     icon: <ViewQuiltRoundedIcon />,
-    title: 'Easy Text Input',
+    title: 'Easy Profile Update',
     description:
-      'Simply input your text and let our software do the rest. Creating flashcards has never been easier.',
+      'Simply edit user profile with your personal and professional background. The updated information will be available every time.',
     imageLight: 'url("red_flame_gradient_logo_3.png")',
     imageDark: 'url("red_flame_gradient_logo_3.png")',
+    link: '/profile',
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
     title: 'Smart Flashcards',
     description:
-      'Our AI intelligently breaks down your text into concise flashcards.',
+      'Our AI intelligently parses your profile and generates tailored questions and answers to common interview questions.',
     imageLight: 'url("aiAvatarChatbot.png")',
     imageDark: 'url("aiAvatarChatbot.png")',
+    link: '/generate',
   },
   {
     icon: <DevicesRoundedIcon />,
     title: 'Accessible Anywhere',
     description:
-      'Easy access the flashcards on the go.',
+      'Easy access the flashcards on the go. Flashcard collections can be saved and viewed later.',
     imageLight: 'url("aiAvatarChatbot.png")',
     imageDark: 'url("aiAvatarChatbot.png")',
+    link: '/flashcards',
   },
 ];
 
@@ -60,11 +63,9 @@ export default function Features() {
             <Typography
               variant="body1"
               color="#FFFFFF"
-              sx={{ mb: { xs: 2, sm: 4 } }}
+              sx={{ mb: { xs: 2, sm: 4 }, mt: { xs: 1, sm: 2 } }}
             >
-              Here you can provide a brief overview of the key features of the
-              product. For example, you could list the number of features, the types
-              of features, add-ons, or the benefits of the features.
+              Here are some of our available features
             </Typography>
           </div>
           <Grid container item gap={1} sx={{ display: { xs: 'auto', sm: 'none' } }}>
@@ -125,6 +126,7 @@ export default function Features() {
                 color="primary"
                 variant="body2"
                 fontWeight="bold"
+                href={selectedFeature.link}
                 sx={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -148,7 +150,7 @@ export default function Features() {
             useFlexGap
             sx={{ width: '100%', display: { xs: 'none', sm: 'flex' } }}
           >
-            {items.map(({ icon, title, description }, index) => (
+            {items.map(({ icon, title, description, link }, index) => (
               <Card
                 key={index}
                 variant="outlined"
@@ -215,6 +217,7 @@ export default function Features() {
                       color="#FCD19C"
                       variant="body2"
                       fontWeight="bold"
+                      href={link}
                       sx={{
                         display: 'inline-flex',
                         alignItems: 'center',
